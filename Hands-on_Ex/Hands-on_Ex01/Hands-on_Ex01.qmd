@@ -36,7 +36,7 @@ ggplot(data=exam_data, aes(x = MATHS)) +
   ggtitle("Distribution of Maths scores")
 ```
 
-# 1.4 Grammar of Graphics 
+# 1.4 Grammar of Graphics
 
 ## 1.4.1 A Layered Grammar of Graphics
 
