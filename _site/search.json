@@ -381,21 +381,28 @@
     "objectID": "Take-home_Ex/Take-home_Ex1/Take-home_Ex1.html#will-number-of-digital-devices-affect-student-performance",
     "href": "Take-home_Ex/Take-home_Ex1/Take-home_Ex1.html#will-number-of-digital-devices-affect-student-performance",
     "title": "Take-home_Ex1",
-    "section": "3.1.4 Will number of digital devices affect student performance ?",
-    "text": "3.1.4 Will number of digital devices affect student performance ?"
+    "section": "Will number of digital devices affect student performance ?",
+    "text": "Will number of digital devices affect student performance ?\n\ncleaned_stu_qqq_eda &lt;- na.omit(stu_qqq_eda)\n\n\nMathReadingScience\n\n\n\nggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_DigitalDevice), y = Math_Score)) +\n  geom_boxplot() +\n  labs(x = \"Number of Digital Devices\", y = \"Math Score\") +\n  ggtitle(\"Distribution of Math Scores for Each Number of Devices\")\n\n\n\n\n\n\n\nggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_DigitalDevice), y = Reading_Score)) +\n  geom_boxplot() +\n  labs(x = \"Number of Digital Devices\", y = \"Math Score\") +\n  ggtitle(\"Distribution of Reading score for Each Number of Devices\")\n\n\n\n\n\n\n\nggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_DigitalDevice), y = Science_Score)) +\n  geom_boxplot() +\n  labs(x = \"Number of Digital Devices\", y = \"Math Score\") +\n  ggtitle(\"Distribution of Science Scores for Each Number of Devices\")"
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex1/Take-home_Ex1.html#will-number-of-musical-instruments-affect-student-performance",
     "href": "Take-home_Ex/Take-home_Ex1/Take-home_Ex1.html#will-number-of-musical-instruments-affect-student-performance",
     "title": "Take-home_Ex1",
-    "section": "3.1.5 Will number of musical instruments affect student performance ?",
-    "text": "3.1.5 Will number of musical instruments affect student performance ?"
+    "section": "Will number of musical instruments affect student performance ?",
+    "text": "Will number of musical instruments affect student performance ?"
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex1/Take-home_Ex1.html#will-food-availability-affect-student-performance",
     "href": "Take-home_Ex/Take-home_Ex1/Take-home_Ex1.html#will-food-availability-affect-student-performance",
     "title": "Take-home_Ex1",
-    "section": "3.1.5 Will food availability affect student performance ?",
-    "text": "3.1.5 Will food availability affect student performance ?"
+    "section": "Will food availability affect student performance ?",
+    "text": "Will food availability affect student performance ?"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex1/Take-home_Ex1.html#socioeconomic-status",
+    "href": "Take-home_Ex/Take-home_Ex1/Take-home_Ex1.html#socioeconomic-status",
+    "title": "Take-home_Ex1",
+    "section": "3.1.4 Socioeconomic Status",
+    "text": "3.1.4 Socioeconomic Status"
   }
 ]

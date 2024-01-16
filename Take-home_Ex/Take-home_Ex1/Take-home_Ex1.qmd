@@ -354,8 +354,44 @@ ggplot(data=stu_avg_score,
 ```
 :::
 
-## 3.1.4 Will number of digital devices affect student performance ?
+## 3.1.4 Socioeconomic Status 
 
-## 3.1.5 Will number of musical instruments affect student performance ?
+## Will number of digital devices affect student performance ?
 
-## 3.1.5 Will food availability affect student performance  ?
+```{r}
+cleaned_stu_qqq_eda <- na.omit(stu_qqq_eda)
+```
+
+::: panel-tabset
+## Math
+
+```{r}
+ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_DigitalDevice), y = Math_Score)) +
+  geom_boxplot() +
+  labs(x = "Number of Digital Devices", y = "Math Score") +
+  ggtitle("Distribution of Math Scores for Each Number of Devices")
+
+```
+
+## Reading
+
+```{r}
+ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_DigitalDevice), y = Reading_Score)) +
+  geom_boxplot() +
+  labs(x = "Number of Digital Devices", y = "Math Score") +
+  ggtitle("Distribution of Reading score for Each Number of Devices")
+```
+
+## Science
+
+```{r}
+ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_DigitalDevice), y = Science_Score)) +
+  geom_boxplot() +
+  labs(x = "Number of Digital Devices", y = "Math Score") +
+  ggtitle("Distribution of Science Scores for Each Number of Devices")
+```
+:::
+
+## Will number of musical instruments affect student performance ?
+
+## Will food availability affect student performance ?
