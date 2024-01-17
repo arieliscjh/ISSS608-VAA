@@ -26,7 +26,7 @@ This project aims to assess if there still social difference among different bac
 The code chunck used is as follows:
 
 ```{r}
-pacman::p_load(tidyverse,haven,ggrepel, patchwork, ggthemes, hrbrthemes)
+pacman::p_load(tidyverse,haven,ggrepel, patchwork, ggthemes, hrbrthemes, ggrain)
 ```
 
 ## 1.2 Dataset
@@ -82,12 +82,6 @@ Missing Values
 sum(is.na(stu_qqq_SG))
 ```
 :::
-
-### 1.2.3 A Quick Visual Look of Stu_qqq_data
-
-```{r}
-
-```
 
 # 2. Data Wrangling
 
@@ -149,7 +143,7 @@ ggplot(data=stu_qqq_eda,
              linetype="dashed") + 
   annotate("text", 
            x=675, 
-           y=60, 
+           y=70, 
            label= paste("Median =", round(median(stu_qqq_eda$Math_Score, na.rm = T), 3)), 
            color= "#595DE5", 
            size=3.5) +
@@ -159,7 +153,7 @@ ggplot(data=stu_qqq_eda,
              linetype="dashed") +
   annotate("text",
            x=500,
-           y=50,
+           y=20,
            label=paste("Mean =", round(mean(stu_qqq_eda$Math_Score, na.rm = T), 3)),
            color="red",
            size=3.5) +
@@ -239,7 +233,13 @@ ggplot(data=stu_qqq_eda,
 
 ## 3.1.2 Are there difference in student performance between gender ?
 
-Reading_Score
+### Distribution
+
+```{r}
+ggplot(data = stu_qqq_eda,
+       aes(x = Gender)) +
+  geom_bar()
+```
 
 ::: panel-tabset
 ## Math
@@ -260,7 +260,7 @@ ggplot(data=stu_qqq_eda,
   stat_bin(bins = 10,
            geom = "text",
            aes(label = after_stat(count)),
-           vjust = -.5,
+           vjust = -.5, size=2.5,
            position = position_dodge())
 ```
 
@@ -282,7 +282,7 @@ ggplot(data=stu_qqq_eda,
   stat_bin(bins = 10,
            geom = "text",
            aes(label = after_stat(count)),
-           vjust = -.5,
+           vjust = -.5, size= 2.5,
            position = position_dodge())
 ```
 
@@ -304,12 +304,14 @@ ggplot(data=stu_qqq_eda,
   stat_bin(bins = 10,
            geom = "text",
            aes(label = after_stat(count)),
-           vjust = -.5,
+           vjust = -.5, size= 2.5,
            position = position_dodge())
 ```
 :::
 
 ## 3.1.3 Are there difference in student performance among various schools?
+
+### Distribution
 
 ```{r}
 stu_avg_score <- stu_qqq_eda %>%
@@ -328,8 +330,10 @@ stu_avg_score <- stu_qqq_eda %>%
 ggplot(data=stu_avg_score,
        aes(x= math_avg)) +
   geom_boxplot(width=0.1) +
-  ylim(c(-.1,.1))+
+  geom_point(aes(y= -0.1), position= position_jitter(width = 0.1, height = 0), color = "red", alpha = 0.5) +
+  ylim(c(-.1,.1)) +
   scale_y_continuous(NULL, breaks = NULL)
+  labs(x= "Math Average among schools", y= NULL)
 
 ```
 
@@ -339,8 +343,10 @@ ggplot(data=stu_avg_score,
 ggplot(data=stu_avg_score,
        aes(x= science_avg)) +
   geom_boxplot(width=0.1) +
+  geom_point(aes(y= -0.1), position= position_jitter(width = 0.1, height = 0), color = "red", alpha = 0.5) +
   ylim(c(-.1,.1)) +
   scale_y_continuous(NULL, breaks = NULL)
+  labs(x= "Science Average among schools", y= NULL)
 ```
 
 ## Reading
@@ -349,14 +355,24 @@ ggplot(data=stu_avg_score,
 ggplot(data=stu_avg_score,
        aes(x= reading_avg)) +
   geom_boxplot(width=0.1) +
-  ylim(c(-.1,.1))+
+  geom_point(aes(y= -0.1), position= position_jitter(width = 0.1, height = 0), color = "red", alpha = 0.5) +
+  ylim(c(-.1,.1)) +
   scale_y_continuous(NULL, breaks = NULL)
+  labs(x= "Reading Average among schools", y= NULL)
 ```
 :::
 
-## 3.1.4 Socioeconomic Status 
+## 3.1.4 Socioeconomic Status
 
-## Will number of digital devices affect student performance ?
+## I. Will number of digital devices affect student performance ?
+
+### Distribution 
+
+```{r}
+ggplot(data = stu_qqq_eda,
+       aes(x = Num_DigitalDevice)) +
+  geom_bar()
+```
 
 ```{r}
 cleaned_stu_qqq_eda <- na.omit(stu_qqq_eda)
@@ -392,6 +408,91 @@ ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_DigitalDevice), y = Scienc
 ```
 :::
 
-## Will number of musical instruments affect student performance ?
+## II. Will number of musical instruments affect student performance ?
 
-## Will food availability affect student performance ?
+### Distribution 
+
+```{r}
+ggplot(data = stu_qqq_eda,
+       aes(x = Num_MusicalInstruments)) +
+  geom_bar()
+```
+
+::: panel-tabset
+## Math 
+
+```{r}
+ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_MusicalInstruments), y = Math_Score)) +
+  geom_bar(stat = "summary", fun = "mean") +
+  labs(x = "Number of Musical Instruments", y = "Mean Math Score") +
+  ggtitle("Mean Math Score for Each Number of Instruments")
+```
+
+## Reading
+
+```{r}
+ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_MusicalInstruments), y = Reading_Score)) +
+  geom_bar(stat = "summary", fun = "mean") +
+  labs(x = "Number of Musical Instruments", y = "Mean Reading Score") +
+  ggtitle("Mean Reading Score for Each Number of Instruments")
+```
+
+## Science
+
+```{r}
+ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_MusicalInstruments), y = Science_Score)) +
+  geom_bar(stat = "summary", fun = "mean") +
+  labs(x = "Number of Musical Instruments", y = "Mean Math Score") +
+  ggtitle("Mean Math Score for Each Number of Instruments")
+```
+:::
+
+## III. Will food availability affect student performance ?
+
+### Distribution 
+
+```{r}
+ggplot(data = stu_qqq_eda,
+       aes(x = Food_Availability)) +
+  geom_bar()
+```
+
+::: panel-tabset
+## Math
+
+```{r}
+ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Food_Availability), y = Math_Score)) +
+  geom_violin() +
+  labs(x = "Degree of Food Availability", y = "Math Score") +
+  ggtitle("Distribution of Math Scores for Each level of Food Availability") +
+  stat_summary(fun = "mean",
+               geom = "point",
+               color = "blue")
+
+```
+
+## Reading
+
+```{r}
+ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Food_Availability), y = Reading_Score)) +
+  geom_violin() +
+  labs(x = "Degree of Food Availability", y = "Reading Score") +
+  ggtitle("Distribution of Reading Scores for Each level of Food Availability") +
+  stat_summary(fun = "mean",
+               geom = "point",
+               color = "blue")
+
+```
+
+## Science
+
+```{r}
+ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Food_Availability), y = Science_Score)) +
+  geom_violin() +
+  labs(x = "Degree of Food Availability", y = "Science Score") +
+  ggtitle("Distribution of Science Scores for Each level of Food Availability") +
+  stat_summary(fun = "mean",
+               geom = "point",
+               color = "blue")
+```
+:::
