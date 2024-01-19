@@ -179,7 +179,7 @@ stu_qqq_eda <- stu_qqq_eda %>%
 
 Before conduct EDA, since the target metrics is students performance in math, reading and science, it is necessary to see the overall distribution of students performance across all this three subjects.
 
-## Students Performance Distribution  
+## Students Performance Distribution
 
 Histogram are used to show the frequency distribution for numerical data. `geom_histogram()` function in `ggplot` is applied to draw the graph.
 
@@ -306,7 +306,7 @@ ggplot(data = stu_qqq_eda,
   geom_bar()
 ```
 
-Moving on to the analysis part, the idea of choosing histogram is that it can clearly show performance distribution among every range of score.
+Moving on to the analysis part, the idea of choosing histogram is that it can clearly show performance distribution among every range of score. In order to compare between gender clearly, using `scale_fill_manual()` function to construct the histogram together with male and female.
 
 ::: panel-tabset
 ## Math
@@ -331,6 +331,8 @@ ggplot(data=stu_qqq_eda,
            position = position_dodge())
 ```
 
+Based on the histogram output, we can see that both male and female represent normal distribution and there is no obvious difference on math score across every bin.
+
 ## Reading
 
 ```{r}
@@ -353,6 +355,10 @@ ggplot(data=stu_qqq_eda,
            position = position_dodge())
 ```
 
+::: panel-tabset
+Based on the histogram output, we can see that both male and female represent normal distribution and there is no obvious difference on reading score across every bin.
+:::
+
 ## Science
 
 ```{r}
@@ -374,11 +380,15 @@ ggplot(data=stu_qqq_eda,
            vjust = -.5, size= 2.5,
            position = position_dodge())
 ```
+
+::: panel-tabset
+Based on the histogram output, we can see that both male and female represent normal distribution and Males' science score slightly higher than females'. Overall, there is no dramatic difference of science score between gender.
+:::
 :::
 
-## 3.2 Are there difference in student performance among various schools?
+In conclusion, after observing the histogram among the three subjects and gender. There seems no significant difference on student's academic performance between male and female.
 
-### Distribution
+## 3.2 Are there difference in student performance among various schools?
 
 ```{r}
 stu_avg_score <- stu_qqq_eda %>%
