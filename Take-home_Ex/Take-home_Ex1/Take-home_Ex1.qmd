@@ -19,14 +19,14 @@ This project will explore multiple possible factors that could help to verify an
 
 This project aims to assess if there still social difference among different background of families. Students' performance on math, reading and science will be the main metrics. The effects brought by school, gender and socioeconomic status on student's academic performance will be tested in this project. Besides, the socioeconomic status will be demonstrated through number of digital devices, number of musical instruments, and food availability.
 
-# 1: Data Preparation
+# 1. Data Preparation
 
 ## 1.1 Loading R package
 
 Let's load the libraries and R package needed for this assignment using `pacman::p_load()` function:
 
 ```{r}
-pacman::p_load(tidyverse,haven,ggrepel, patchwork, ggthemes, hrbrthemes, ggrain)
+pacman::p_load(tidyverse, haven, patchwork)
 ```
 
 The loaded packages are:
@@ -83,52 +83,40 @@ This is a summary statistics of the stu_qqq data, after using `glimpse ()` to ge
 
 After running the function, here is the results:
 
--   ::: panel-tabset
-    ## Dataset Overview
+::: panel-tabset
+## Initial Raw Dataset Overview
 
-    ```{r}
-    #| eval: false
-    glimpse(stu_qqq_SG)
-    ```
+```{r}
+dim_desc(stu_qqq_SG)
+head(stu_qqq_SG,5)
+```
 
-    -   Observations: 6606
+-   Observations: 6606
 
-    -   Columns: 1279
+-   Columns: 1279
 
-    -   Example variable display:
+The dataset contains basic information of sudents (i.e., school ID, birth month and year), and their answer for questions under different questionnaire.
 
-        ```         
-        $ CNTSCHID     <dbl> 70200052, 70200134, 70200112, 70200004, 70200152, 70200043, …
-        $ ST004D01T    <dbl> 1, 2, 2, 2, 1, 1, 2, 2, 1, 2, 2, 1, 1, 2, 1, 2, 1, 2, 1, 1, …
-        $ ST006Q01JA   <dbl> 2, 2, 2, 2, 2, 2, 2, NA, 2, 2, NA, 2, 1, 2, 2, 2, 2, 2, 2, 2…
-        ```
+## Data Checking
 
-    The dataset contains basic information of sudents (i.e., school ID, birth month and year), and their answer for questions under different questionnaire.
+Duplicates
 
-    ## Data Checking
+```{r}
+stu_qqq_SG[duplicated(stu_qqq_SG),]
+```
 
-    Duplicates
+-   There is no duplicates inside the dataset
 
-    ```{r}
-    stu_qqq_SG[duplicated(stu_qqq_SG),]
-    ```
+Missing Values
 
-    -   There is no duplicates inside the dataset
+```{r}
+sum(is.na(stu_qqq_SG))
+```
 
-    Missing Values
+-   There are 4168500 values missing, missing value are represented NA in the dataset.
 
-    ```{r}
-    sum(is.na(stu_qqq_SG))
-    ```
-
-    -   There are 4168500 values missing, mainly missing value are NA data.
-
-    -   Example:
-
-        ```         
-        $ LANGTEST_PAQ <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-        ```
-    :::
+-   There are significant number of missing value in the dataset, however these are spread across the dataset, not all columns that are used in EDA will contain these amount of missing value.
+:::
 
 # 2. Data Wrangling
 
@@ -140,12 +128,10 @@ Besides, the original variable is named in a code base and numeric way, so it is
 
 ```{r}
 stu_qqq_eda<-stu_qqq_SG %>%
-  select(CNTSCHID,CNTSTUID,ST004D01T,ST253Q01JA,ST258Q01JA, ST251Q06JA, PV1MATH, PV1READ, PV1SCIE)%>%
+  select(CNTSCHID,CNTSTUID,ST004D01T,ST258Q01JA,PV1MATH,PV1READ, PV1SCIE,ESCS)%>%
   rename(c(Gender="ST004D01T", 
            School_ID="CNTSCHID", 
-           Num_DigitalDevice='ST253Q01JA',
            Food_Availability='ST258Q01JA',
-           Num_MusicalInstruments='ST251Q06JA', 
            Student_ID='CNTSTUID',
            Math_Score= "PV1MATH",
            Reading_Score="PV1READ",
@@ -161,9 +147,7 @@ School_ID, Gender, Num_DigitaDevice, Food_Availability, Num_MusicalInstruments a
 ```{r}
 stu_qqq_eda$School_ID = as.factor(stu_qqq_eda$School_ID)
 stu_qqq_eda$Gender = as.factor(stu_qqq_eda$Gender)
-stu_qqq_eda$Num_DigitalDevice = as.factor(stu_qqq_eda$Num_DigitalDevice)
 stu_qqq_eda$Food_Availability = as.factor(stu_qqq_eda$Food_Availability)
-stu_qqq_eda$Num_MusicalInstruments= as.factor(stu_qqq_eda$Num_MusicalInstruments)
 ```
 
 ## 2.3 Recode variable
@@ -172,7 +156,20 @@ Currently, "gender" variable is using "1", "2" to represent for male and female.
 
 ```{r}
 stu_qqq_eda <- stu_qqq_eda %>%
-  mutate(Gender=(recode(Gender, '1'="Female", '2'="Male")))
+  mutate(Gender=(recode(Gender, '1'="Female", '2'="Male")),
+         Food_Availability=(recode(Food_Availability,
+                                   '1'='never',
+                                   '2'='once a week',
+                                   '3'='2-3 a week',
+                                   '4'='4-5 a week',
+                                   '5'='everyday')))
+
+```
+
+## 2.4 Final dataset overview
+
+```{r}
+glimpse(stu_qqq_eda)
 ```
 
 # 3. Exploratory Data Analysis (EDA)
@@ -355,9 +352,7 @@ ggplot(data=stu_qqq_eda,
            position = position_dodge())
 ```
 
-::: panel-tabset
 Based on the histogram output, we can see that both male and female represent normal distribution and there is no obvious difference on reading score across every bin.
-:::
 
 ## Science
 
@@ -381,14 +376,14 @@ ggplot(data=stu_qqq_eda,
            position = position_dodge())
 ```
 
-::: panel-tabset
 Based on the histogram output, we can see that both male and female represent normal distribution and Males' science score slightly higher than females'. Overall, there is no dramatic difference of science score between gender.
-:::
 :::
 
 In conclusion, after observing the histogram among the three subjects and gender. There seems no significant difference on student's academic performance between male and female.
 
 ## 3.2 Are there difference in student performance among various schools?
+
+This EDA is to explore the difference in students' performance among various school. Before plotting, the average of students' score is calculated using `mean ()` function for a overall demonstration among schools.
 
 ```{r}
 stu_avg_score <- stu_qqq_eda %>%
@@ -414,6 +409,8 @@ ggplot(data=stu_avg_score,
 
 ```
 
+From the graph above, it shows that the score spread across from 400 to 800, which means that the variance is large. Therefore, it indicated that the difference of schools make a contribution towords students' math score performance.
+
 ## Science
 
 ```{r}
@@ -426,6 +423,8 @@ ggplot(data=stu_avg_score,
   labs(x= "Science Average among schools", y= NULL)
 ```
 
+From the graph above, it shows that the score spread across from 350 to 750 which means that the variance is large. Therefore, it indicated that the difference of schools make a contribution towards students' science score performance.
+
 ## Reading
 
 ```{r}
@@ -437,101 +436,124 @@ ggplot(data=stu_avg_score,
   scale_y_continuous(NULL, breaks = NULL)
   labs(x= "Reading Average among schools", y= NULL)
 ```
+
+From the graph above, it shows that the score spread across from 300 to 700, which means that the variance is large. Therefore, it indicated that the difference of schools make a contribution to students' reading score performance.
 :::
+
+In conclusion, from the output of score performance and schools, it generally demonstrated that school have a possibility to be an indicator to students' academic performance.
 
 ## 3.3 Socioeconomic Status
 
-## 3.3.1 Will number of digital devices affect student performance ?
+In this section, the main focus is related to students' socioeconomic status. Before go into the specific variable, lets first have a look to the distribution of their socioeconomic status
 
-### Distribution
-
-```{r}
-ggplot(data = stu_qqq_eda,
-       aes(x = Num_DigitalDevice)) +
-  geom_bar()
-```
+### Distribution of SocialEconomic Status Score
 
 ```{r}
-cleaned_stu_qqq_eda <- na.omit(stu_qqq_eda)
+ggplot(data=stu_qqq_eda, 
+       aes(x=ESCS)) +
+  geom_histogram(color= "grey10",
+           fill= '#FFC0CB') +
+  labs(x= "Socioeconomic status",
+       y="No.of students",
+       title= "Distribution of Socioeconomic Performance") +
+geom_vline(aes(xintercept=median(stu_qqq_eda$ESCS, na.rm = T)), 
+             color="#595DE5", 
+             linewidth=1, 
+             linetype="dashed") + 
+  annotate("text", 
+           x=1.5, 
+           y=100, 
+           label= paste("Median =", round(median(stu_qqq_eda$ESCS, na.rm = T), 3)), 
+           color= "#595DE5", 
+           size=3.5) +
+  geom_vline(aes(xintercept=mean(stu_qqq_eda$ESCS, na.rm = T)),
+             colour="red",
+             linewidth=1,
+             linetype="dashed") +
+  annotate("text",
+           x=-0.5,
+           y=100,
+           label=paste("Mean =", round(mean(stu_qqq_eda$ESCS, na.rm = T), 3)),
+           color="red",
+           size=3.5) +
+  theme(plot.background=element_rect(fill="#f5f5f5",colour="#f5f5f5"))
 ```
+
+From the histogram above, it demonstrated that the range of socioeconomic status is from -4 to 3.5 and it is slightly skewed to the right side.
+
+## 3.3.1 Student performance and socioeconomic status
+
+In this EDA, it will show the relationship between student academic score and socioeconomic status score using scatter plot with `cor()` function.
 
 ::: panel-tabset
 ## Math
 
 ```{r}
-ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_DigitalDevice), y = Math_Score)) +
-  geom_boxplot() +
-  labs(x = "Number of Digital Devices", y = "Math Score") +
-  ggtitle("Distribution of Math Scores for Each Number of Devices")
+cor_Math <- round(cor(stu_qqq_eda$Math_Score, stu_qqq_eda$ESCS, use = "complete.obs"), 2)
 
-```
-
-## Reading
-
-```{r}
-ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_DigitalDevice), y = Reading_Score)) +
-  geom_boxplot() +
-  labs(x = "Number of Digital Devices", y = "Math Score") +
-  ggtitle("Distribution of Reading score for Each Number of Devices")
-```
-
-## Science
-
-```{r}
-ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_DigitalDevice), y = Science_Score)) +
-  geom_boxplot() +
-  labs(x = "Number of Digital Devices", y = "Math Score") +
-  ggtitle("Distribution of Science Scores for Each Number of Devices")
-```
-:::
-
-## 3.3.2 Will number of musical instruments affect student performance ?
-
-### Distribution
-
-```{r}
 ggplot(data = stu_qqq_eda,
-       aes(x = Num_MusicalInstruments)) +
-  geom_bar()
+       aes(y = Math_Score, x = ESCS)) +
+  geom_point(size = 1)+
+  geom_smooth(method = lm) + 
+  annotate("text", x=0, y=500, label=paste0("r = ", cor_Math), color = 'green')
 ```
 
-::: panel-tabset
-## Math
-
-```{r}
-ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_MusicalInstruments), y = Math_Score)) +
-  geom_bar(stat = "summary", fun = "mean") +
-  labs(x = "Number of Musical Instruments", y = "Mean Math Score") +
-  ggtitle("Mean Math Score for Each Number of Instruments")
-```
+From the graph showing above, it shows that there is moderate positive relationship between students' math score and their socioeconomic status score. It indicated that if the students have higher socioeconomic status score, they will more likely to have a higher math score.
 
 ## Reading
 
 ```{r}
-ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_MusicalInstruments), y = Reading_Score)) +
-  geom_bar(stat = "summary", fun = "mean") +
-  labs(x = "Number of Musical Instruments", y = "Mean Reading Score") +
-  ggtitle("Mean Reading Score for Each Number of Instruments")
+cor_Reading <- round(cor(stu_qqq_eda$Reading_Score, stu_qqq_eda$ESCS, use = "complete.obs"), 2)
+
+ggplot(data = stu_qqq_eda,
+       aes(y = Reading_Score, x = ESCS)) +
+  geom_point(size = 1)+
+  geom_smooth(method = lm) + 
+  annotate("text", x=0, y=500, label=paste0("r = ", cor_Reading), color = 'green')
 ```
+
+From the graph showing above, it shows that there is moderate positive relationship between students' reading score and their socioeconomic status score. It indicated that if the students have higher socioeconomic status score, they will more likely to have a higher reading score.
 
 ## Science
 
 ```{r}
-ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Num_MusicalInstruments), y = Science_Score)) +
-  geom_bar(stat = "summary", fun = "mean") +
-  labs(x = "Number of Musical Instruments", y = "Mean Math Score") +
-  ggtitle("Mean Math Score for Each Number of Instruments")
+cor_Science <- round(cor(stu_qqq_eda$Science_Score, stu_qqq_eda$ESCS, use = "complete.obs"), 2)
+
+ggplot(data = stu_qqq_eda,
+       aes(y = Science_Score, x = ESCS)) +
+  geom_point(size = 1)+
+  geom_smooth(method = lm) + 
+  annotate("text", x=0, y=500, label=paste0("r = ", cor_Science), color = 'green')
 ```
+
+From the graph showing above, it shows that there is moderate positive relationship between students' science score and their socioeconomic status score. It indicated that if the students have higher socioeconomic status score, they will more likely to have a higher science score.
 :::
+
+In conclusion, from all three scatter plot, a consistent pattern can be observed from the three subject with moderate positive relationship. It demonstrated that higher socioeconomic status indicated the better academic performance.
 
 ## 3.3.3 Will food availability affect student performance ?
 
-### Distribution
+In this EDA, it will show the difference of students' academic performance on the degree of food availability.
+
+Here is a distributions of food availability:
+
+### Distributions
 
 ```{r}
 ggplot(data = stu_qqq_eda,
        aes(x = Food_Availability)) +
   geom_bar()
+```
+
+From the bar graph above, we can see that most of the students don't have concern of food availability.
+
+`drop_na()` function is applied to remove NA data which is not useful in the analysis
+
+```{r}
+cleaned_stu_qqq_eda <- stu_qqq_eda %>%
+  select(Math_Score, Science_Score, Reading_Score, Food_Availability) %>%
+  drop_na()
+
 ```
 
 ::: panel-tabset
@@ -540,7 +562,7 @@ ggplot(data = stu_qqq_eda,
 ```{r}
 ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Food_Availability), y = Math_Score)) +
   geom_violin() +
-  labs(x = "Degree of Food Availability", y = "Math Score") +
+  labs(x = "Degree of Food Concern", y = "Math Score") +
   ggtitle("Distribution of Math Scores for Each level of Food Availability") +
   stat_summary(fun = "mean",
                geom = "point",
@@ -548,12 +570,14 @@ ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Food_Availability), y = Math_S
 
 ```
 
+From the violin graph above, the mean of math score among different degree of food concern frequency is reducing from never to everyday. It indicated that a student who have higher math score more likely to have less food availability concern.
+
 ## Reading
 
 ```{r}
 ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Food_Availability), y = Reading_Score)) +
   geom_violin() +
-  labs(x = "Degree of Food Availability", y = "Reading Score") +
+  labs(x = "Degree of Food Concern", y = "Reading Score") +
   ggtitle("Distribution of Reading Scores for Each level of Food Availability") +
   stat_summary(fun = "mean",
                geom = "point",
@@ -561,15 +585,19 @@ ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Food_Availability), y = Readin
 
 ```
 
+From the violin graph above, the mean of reading score among different degree of food concern frequency is reducing from never to everyday. It indicated that a student who have higher reading score more likely to have less food availability concern.
+
 ## Science
 
 ```{r}
 ggplot(data = cleaned_stu_qqq_eda, aes(x = factor(Food_Availability), y = Science_Score)) +
   geom_violin() +
-  labs(x = "Degree of Food Availability", y = "Science Score") +
+  labs(x = "Degree of Food Concern", y = "Science Score") +
   ggtitle("Distribution of Science Scores for Each level of Food Availability") +
   stat_summary(fun = "mean",
                geom = "point",
                color = "blue")
 ```
+
+From the violin graph above, the mean of science score among different degree of food concern frequency is reducing from never to everyday. It indicated that a student who have higher science score more likely to have less food availability concern.
 :::
