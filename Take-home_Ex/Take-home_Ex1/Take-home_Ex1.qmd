@@ -26,24 +26,20 @@ This project aims to assess if there still social difference among different bac
 Let's load the libraries and R package needed for this assignment using `pacman::p_load()` function:
 
 ```{r}
-pacman::p_load(tidyverse, haven, patchwork)
+pacman::p_load(tidyverse, haven, patchwork,ggrepel,ggthemes)
 ```
 
 The loaded packages are:
 
--   tidverse
+-   [tidverse](https://www.tidyverse.org/): data wrangling, tidying, reading/writing, parsing, and visualizing
 
--   haven:
+-   [haven](https://haven.tidyverse.org/): read and write various data formats used by other statistical packages
 
--   ggrepel:
+-   [ggrepel](https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html): prevent overlapping text labels
 
--   patchwork:
+-   [patchwork](https://cran.r-project.org/web/packages/patchwork/vignettes/patchwork.html): preparing composite figure
 
--   ggthemes:
-
--   hrbrthemes:
-
--   ggrain:
+-   [ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/): provide extra themes, geoms, and scales
 
 ## 1.2 Dataset
 
@@ -152,7 +148,9 @@ stu_qqq_eda$Food_Availability = as.factor(stu_qqq_eda$Food_Availability)
 
 ## 2.3 Recode variable
 
-Currently, "gender" variable is using "1", "2" to represent for male and female. However, it might be not clear in the future analysis for people to quickly identify female and male. Therefore, rename the option is important for people to get a quick understanding, using `recode()` function.
+Currently, "gender" variable is using "1", "2" to represent for male and female. However, it might be not clear in the future analysis for people to quickly identify female and male. Besides, for food availability variable, to help people fast know what those option are, it is necessarily to replace the number with concise word format.
+
+Therefore, rename the option is important for people to get a quick understanding, using `recode()` function.
 
 ```{r}
 stu_qqq_eda <- stu_qqq_eda %>%
@@ -176,17 +174,16 @@ glimpse(stu_qqq_eda)
 
 Before conduct EDA, since the target metrics is students performance in math, reading and science, it is necessary to see the overall distribution of students performance across all this three subjects.
 
-## Students Performance Distribution
+## 3.1 Students Performance Distribution
 
 Histogram are used to show the frequency distribution for numerical data. `geom_histogram()` function in `ggplot` is applied to draw the graph.
 
-::: panel-tabset
-## Math
+### Math
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show code"
-ggplot(data=stu_qqq_eda, 
+p1<- ggplot(data=stu_qqq_eda, 
        aes(x=Math_Score)) +
   geom_histogram(color= "grey10",
            fill= '#FFC0CB') +
@@ -199,7 +196,7 @@ ggplot(data=stu_qqq_eda,
              linetype="dashed") + 
   annotate("text", 
            x=675, 
-           y=70, 
+           y=100, 
            label= paste("Median =", round(median(stu_qqq_eda$Math_Score, na.rm = T), 3)), 
            color= "#595DE5", 
            size=3.5) +
@@ -209,19 +206,19 @@ ggplot(data=stu_qqq_eda,
              linetype="dashed") +
   annotate("text",
            x=500,
-           y=20,
+           y=100,
            label=paste("Mean =", round(mean(stu_qqq_eda$Math_Score, na.rm = T), 3)),
            color="red",
            size=3.5) +
   theme(plot.background=element_rect(fill="#f5f5f5",colour="#f5f5f5"))
 ```
 
-## Reading
+### Reading
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show code"
-ggplot(data=stu_qqq_eda, 
+p2<- ggplot(data=stu_qqq_eda, 
        aes(x=Reading_Score)) +
   geom_histogram(color= "grey10",
            fill= '#FFC0CB') +
@@ -234,7 +231,7 @@ ggplot(data=stu_qqq_eda,
              linetype="dashed") + 
   annotate("text", 
            x=650, 
-           y=60, 
+           y=100, 
            label= paste("Median =", round(median(stu_qqq_eda$Reading_Score, na.rm = T), 3)), 
            color= "#595DE5", 
            size=3.5) +
@@ -244,19 +241,19 @@ ggplot(data=stu_qqq_eda,
              linetype="dashed") +
   annotate("text",
            x=460,
-           y=50,
+           y=100,
            label=paste("Mean =", round(mean(stu_qqq_eda$Reading_Score, na.rm = T), 3)),
            color="red",
            size=3.5) +
   theme(plot.background=element_rect(fill="#f5f5f5",colour="#f5f5f5"))
 ```
 
-## Science
+### Science
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show code"
-ggplot(data=stu_qqq_eda, 
+p3<- ggplot(data=stu_qqq_eda, 
        aes(x=Science_Score)) +
   geom_histogram(color= "grey10",
            fill= '#FFC0CB') +
@@ -269,7 +266,7 @@ ggplot(data=stu_qqq_eda,
              linetype="dashed") + 
   annotate("text", 
            x=650, 
-           y=60, 
+           y=100, 
            label= paste("Median =", round(median(stu_qqq_eda$Science_Score, na.rm = T), 3)), 
            color= "#595DE5", 
            size=3.5) +
@@ -279,17 +276,22 @@ ggplot(data=stu_qqq_eda,
              linetype="dashed") +
   annotate("text",
            x=480,
-           y=50,
+           y=100,
            label=paste("Mean =", round(mean(stu_qqq_eda$Science_Score, na.rm = T), 3)),
            color="red",
            size=3.5) +
   theme(plot.background=element_rect(fill="#f5f5f5",colour="#f5f5f5"))
 ```
-:::
+
+### Plot
+
+```{r}
+p1/p2/p3
+```
 
 From the histogram show above, students' math, reading, and science demonstrated a normal distribution with a similar mean and median score across this three subjects. More than half of the students' score is in the range from 500-600.
 
-## 3.1 Are there difference in student performance between gender ?
+## 3.2 Are there difference in student performance between gender ?
 
 ### Distribution
 
@@ -381,7 +383,7 @@ Based on the histogram output, we can see that both male and female represent no
 
 In conclusion, after observing the histogram among the three subjects and gender. There seems no significant difference on student's academic performance between male and female.
 
-## 3.2 Are there difference in student performance among various schools?
+## 3.3 Are there difference in student performance among various schools?
 
 This EDA is to explore the difference in students' performance among various school. Before plotting, the average of students' score is calculated using `mean ()` function for a overall demonstration among schools.
 
@@ -442,7 +444,7 @@ From the graph above, it shows that the score spread across from 300 to 700, whi
 
 In conclusion, from the output of score performance and schools, it generally demonstrated that school have a possibility to be an indicator to students' academic performance.
 
-## 3.3 Socioeconomic Status
+## 3.4 Socioeconomic Status
 
 In this section, the main focus is related to students' socioeconomic status. Before go into the specific variable, lets first have a look to the distribution of their socioeconomic status
 
@@ -481,7 +483,7 @@ geom_vline(aes(xintercept=median(stu_qqq_eda$ESCS, na.rm = T)),
 
 From the histogram above, it demonstrated that the range of socioeconomic status is from -4 to 3.5 and it is slightly skewed to the right side.
 
-## 3.3.1 Student performance and socioeconomic status
+## 3.4.1 Student performance and socioeconomic status
 
 In this EDA, it will show the relationship between student academic score and socioeconomic status score using scatter plot with `cor()` function.
 
@@ -531,7 +533,7 @@ From the graph showing above, it shows that there is moderate positive relations
 
 In conclusion, from all three scatter plot, a consistent pattern can be observed from the three subject with moderate positive relationship. It demonstrated that higher socioeconomic status indicated the better academic performance.
 
-## 3.3.3 Will food availability affect student performance ?
+## 3.4.2 Will food availability affect student performance ?
 
 In this EDA, it will show the difference of students' academic performance on the degree of food availability.
 
