@@ -607,5 +607,236 @@
     "title": "Hands-on_Ex3",
     "section": "4.2.2 Building an animated bubble plot: plot_ly() method",
     "text": "4.2.2 Building an animated bubble plot: plot_ly() method\n\nbp &lt;- globalPop %&gt;%\n  plot_ly(x = ~Old, \n          y = ~Young, \n          size = ~Population, \n          color = ~Continent,\n          sizes = c(2, 100),\n          frame = ~Year, \n          text = ~Country, \n          hoverinfo = \"text\",\n          type = 'scatter',\n          mode = 'markers'\n          ) %&gt;%\n  layout(showlegend = FALSE)\nbp"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html",
+    "title": "Take-home_Ex2",
+    "section": "",
+    "text": "I selected a classmate’s Take-home Exercise 1 contribution for this Take-home Exercise 2 and evaluated the charts for clarity and aesthetic. Additionally, the original design was recreated utilizing the best practices and data visualization techniques covered in the first two lectures."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#loading-r-package",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#loading-r-package",
+    "title": "Take-home_Ex2",
+    "section": "2.1 Loading R package",
+    "text": "2.1 Loading R package\nLet’s load the libraries and R package needed for this assignment using pacman::p_load()function:\n\npacman::p_load(tidyverse, haven, patchwork,ggrepel,ggthemes)"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#importing-data",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#importing-data",
+    "title": "Take-home_Ex2",
+    "section": "2.2 Importing data",
+    "text": "2.2 Importing data\nThe code chunk below uses ‘read_sas()’ of ‘haven’ to import PISA data into R environment.\n\nstu_qqq &lt;-read_sas(\"data/cy08msp_stu_qqq.sas7bdat\") \n\n\nstu_qqq_SG &lt;-stu_qqq %&gt;%\n  filter(CNT == \"SGP\")\n\n\nwrite_rds(stu_qqq_SG,\"data/stu_qqq_SG.rds\")\n\n\nstu_qqq_SG &lt;-  \nread_rds(\"data/stu_qqq_SG.rds\")"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#original-design",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#original-design",
+    "title": "Take-home_Ex2",
+    "section": "3.1 Original Design",
+    "text": "3.1 Original Design\nThe original design is shown below\n\nUsage of Histogram is reasonable and appropriate as it fulfill the objectives of demonstrating the distribution of math, reading, and science score. However, this chart can be improved in following criteria."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#clarity",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#clarity",
+    "title": "Take-home_Ex2",
+    "section": "3.2 Clarity",
+    "text": "3.2 Clarity"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-graph-title",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-graph-title",
+    "title": "Take-home_Ex2",
+    "section": "(a) Graph Title",
+    "text": "(a) Graph Title\nThe title is concise and can reflect the content of histogram. However, it might be not clear and straightforward enough for people have a fast understanding when they read it since there is words that shows certain level of conjecture."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-axes-labeling",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-axes-labeling",
+    "title": "Take-home_Ex2",
+    "section": "(b) Axes Labeling",
+    "text": "(b) Axes Labeling\nIt is sometimes the case that column names like PVmath and y will not make sense to users while viewing the charts, thus new axes labels can be added to graphs instead of utilizing the same name as the columns."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics",
+    "title": "Take-home_Ex2",
+    "section": "3.3 Aesthetics",
+    "text": "3.3 Aesthetics"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-redundant-title",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-redundant-title",
+    "title": "Take-home_Ex2",
+    "section": "(a) Redundant title",
+    "text": "(a) Redundant title\nSince the name of the x-axis already can represent the content of the graph, it is not necessary to add the sub-title."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-gridlines-vertical",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-gridlines-vertical",
+    "title": "Take-home_Ex2",
+    "section": "(b) Gridlines-Vertical",
+    "text": "(b) Gridlines-Vertical\nSince the original graph already marked down the max, min, and mean value, besides the tick marks already marked on the x-axis, it is not necessary to have the vertical gridline."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#sketch-of-proposed-design",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#sketch-of-proposed-design",
+    "title": "Take-home_Ex2",
+    "section": "3.4 Sketch of Proposed Design",
+    "text": "3.4 Sketch of Proposed Design\nRough sketch of proposed design is shown below"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#rename-the-variable",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#rename-the-variable",
+    "title": "Take-home_Ex2",
+    "section": "3.5. Rename the variable",
+    "text": "3.5. Rename the variable\n\nstu_qqq_1&lt;-stu_qqq_SG %&gt;%\n  select(PV1MATH,PV1READ, PV1SCIE)%&gt;%\n  rename(c(Math_Score= \"PV1MATH\",\n           Reading_Score=\"PV1READ\",\n           Science_Score=\"PV1SCIE\"))"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#final-design",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#final-design",
+    "title": "Take-home_Ex2",
+    "section": "3.6 Final Design",
+    "text": "3.6 Final Design\nAfter conduct the changes list above, here is the final design:\n\nmaths_mean &lt;- mean(stu_qqq_1$Math_Score)\nmaths_min &lt;- min(stu_qqq_1$Math_Score)\nmaths_max &lt;- max(stu_qqq_1$Math_Score)\n\nread_mean &lt;- mean(stu_qqq_1$Reading_Score)\nread_min &lt;- min(stu_qqq_1$Reading_Score)\nread_max &lt;- max(stu_qqq_1$Reading_Score)\n\nscience_mean &lt;- mean(stu_qqq_1$Science_Score)\nscience_min &lt;- min(stu_qqq_1$Science_Score)\nscience_max &lt;- max(stu_qqq_1$Science_Score)\n\n\nhist_maths &lt;- ggplot(data = stu_qqq_1,\n             aes(x = Math_Score)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"chartreuse3\",\n                 fill = \"lightgreen\") +\n  geom_vline(aes(xintercept = maths_mean),\n             color = \"darkgreen\",\n             linetype = \"dashed\") +\n  geom_vline(aes(xintercept = maths_min),\n             color = \"darkgreen\",\n             linetype = \"dashed\") +\n  geom_vline(aes(xintercept = maths_max),\n             color = \"darkgreen\",\n             linetype = \"dashed\") +\n  annotate(\"text\", x = maths_mean, y = 1100,label = paste(\"Mean=\", round(maths_mean, 1)), size = 3, color = \"darkgreen\") +\n  annotate(\"text\", x = maths_min, y = 1000,label = paste(\"Min=\", round(maths_min, 1)), size = 3, color = \"darkgreen\") +\n  annotate(\"text\", x = maths_max - 50, y = 1000,label = paste(\"Max=\", round(maths_max, 1)), size = 3, color = \"darkgreen\") +\n  coord_cartesian(xlim = c(0, 1100),\n                  ylim = c(0, 1100)) +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.x = element_blank()) +\n  scale_y_continuous(\"No. of Students\")\n\nhist_read &lt;- ggplot(data = stu_qqq_1,\n             aes(x = Reading_Score)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"blue\",\n                 fill = \"lightblue\") +\n  geom_vline(aes(xintercept = read_mean),\n             color = \"darkblue\",\n             linetype = \"dashed\") +\n  geom_vline(aes(xintercept = read_min),\n             color = \"darkblue\",\n             linetype = \"dashed\") +\n  geom_vline(aes(xintercept = read_max),\n             color = \"darkblue\",\n             linetype = \"dashed\") +\n  annotate(\"text\", x = read_mean, y = 1100,label = paste(\"Mean=\", round(read_mean, 1)), size = 3, color = \"darkblue\") +\n  annotate(\"text\", x = read_min + 50, y = 1000,label = paste(\"Min=\", round(read_min, 1)), size = 3, color = \"darkblue\") +\n  annotate(\"text\", x = read_max - 50, y = 1000,label = paste(\"Max=\", round(read_max, 1)), size = 3, color = \"darkblue\") +\n  coord_cartesian(xlim = c(0, 1100),\n                  ylim = c(0, 1100)) +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.x = element_blank())\n\nhist_science &lt;- ggplot(data = stu_qqq_1,\n             aes(x = Science_Score)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"red\",\n                 fill = \"pink\") +\n  geom_vline(aes(xintercept = science_mean),\n             color = \"darkred\",\n             linetype = \"dashed\") +\n  geom_vline(aes(xintercept = science_min),\n             color = \"darkred\",\n             linetype = \"dashed\") +\n  geom_vline(aes(xintercept = science_max),\n             color = \"darkred\",\n             linetype = \"dashed\") +\n  annotate(\"text\", x = science_mean, y = 1100,label = paste(\"Mean=\", round(science_mean, 1)), size = 3, color = \"darkred\") +\n  annotate(\"text\", x = science_min + 50, y = 1000,label = paste(\"Min=\", round(science_min, 1)), size = 3, color = \"darkred\") +\n  annotate(\"text\", x = science_max - 50, y = 1000,label = paste(\"Max=\", round(science_max, 1)), size = 3, color = \"darkred\") +\n  coord_cartesian(xlim = c(0, 1100),\n                  ylim = c(0, 1100)) +\n  theme(panel.grid.minor = element_blank(),\n        panel.grid.major.x = element_blank())\n\nhist_maths + hist_read + hist_science +\n  plot_annotation(\"Distribution of Plausible Values for Each Subject\",\ntheme = theme(plot.title = element_text(hjust = 0.5)))"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#original-design-1",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#original-design-1",
+    "title": "Take-home_Ex2",
+    "section": "4.1 Original Design",
+    "text": "4.1 Original Design\nThe original design is shown below"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#clarity-1",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#clarity-1",
+    "title": "Take-home_Ex2",
+    "section": "5.2 Clarity",
+    "text": "5.2 Clarity"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-redundant-plot--violin-boxplot",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-redundant-plot--violin-boxplot",
+    "title": "Take-home_Ex2",
+    "section": "(a) Redundant plot- violin + boxplot",
+    "text": "(a) Redundant plot- violin + boxplot\nonly violin already can demonstrate the distribution\nscatter plot did not tell useful information and it’s usually to represent the relationship"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-mean-score-presentation",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-mean-score-presentation",
+    "title": "Take-home_Ex2",
+    "section": "(b) Mean score presentation",
+    "text": "(b) Mean score presentation\nInstead of only line without specific number, it will be more clear to readers after put the specific score"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics-1",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics-1",
+    "title": "Take-home_Ex2",
+    "section": "3.3 Aesthetics",
+    "text": "3.3 Aesthetics"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-change-of-layout",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-change-of-layout",
+    "title": "Take-home_Ex2",
+    "section": "(a) Change of layout",
+    "text": "(a) Change of layout"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#original-design-2",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#original-design-2",
+    "title": "Take-home_Ex2",
+    "section": "5.1 Original Design",
+    "text": "5.1 Original Design\nThe original design is shown below"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#clarity-2",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#clarity-2",
+    "title": "Take-home_Ex2",
+    "section": "5.2 Clarity",
+    "text": "5.2 Clarity"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-alternative-chart-type-for-better-presentation",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-alternative-chart-type-for-better-presentation",
+    "title": "Take-home_Ex2",
+    "section": "(a) Alternative chart type for better presentation",
+    "text": "(a) Alternative chart type for better presentation\nCurrent chart type it’s inappropriate in this question, since heatmap it’s specifically build for categorical data. In this case, Student’s score it’s a continuous data and the number of school ID its too many to visualize in a clear and straightforward way. Bar chart might can consider to use after recode students’s performance score into different score range which is categorical data."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-axes-labeling-1",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-axes-labeling-1",
+    "title": "Take-home_Ex2",
+    "section": "(b) Axes Labeling",
+    "text": "(b) Axes Labeling\nIt is sometimes the case that column names like PVmath and y will not make sense to users while viewing the charts, thus new axes labels can be added to graphs instead of utilizing the same name as the columns."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics-2",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics-2",
+    "title": "Take-home_Ex2",
+    "section": "3.3 Aesthetics",
+    "text": "3.3 Aesthetics"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-redundant-title-1",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-redundant-title-1",
+    "title": "Take-home_Ex2",
+    "section": "(a) Redundant title",
+    "text": "(a) Redundant title\nSince the name of the x-axis already can represent the content of the graph, it is not necessary to add the sub-title."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-gridlines-vertical-1",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-gridlines-vertical-1",
+    "title": "Take-home_Ex2",
+    "section": "(b) Gridlines-Vertical",
+    "text": "(b) Gridlines-Vertical\nSince the original graph already marked down the max, min, and mean value, besides the tick marks already marked on the x-axis, it is not necessary to have the vertical gridline."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#sketch-of-proposed-design-1",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#sketch-of-proposed-design-1",
+    "title": "Take-home_Ex2",
+    "section": "3.4 Sketch of Proposed Design",
+    "text": "3.4 Sketch of Proposed Design\nRough sketch of proposed design is shown below"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#original-design-3",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#original-design-3",
+    "title": "Take-home_Ex2",
+    "section": "6.1 Original Design",
+    "text": "6.1 Original Design"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#clarity-3",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#clarity-3",
+    "title": "Take-home_Ex2",
+    "section": "6.2 Clarity",
+    "text": "6.2 Clarity"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-display-position-of-r-square",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-display-position-of-r-square",
+    "title": "Take-home_Ex2",
+    "section": "(a) Display position of R square",
+    "text": "(a) Display position of R square"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-axes-labeling-2",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-axes-labeling-2",
+    "title": "Take-home_Ex2",
+    "section": "(b) Axes Labeling",
+    "text": "(b) Axes Labeling\nIt is sometimes the case that column names like PVmath and ESCS will not make sense to users while viewing the charts, thus new axes labels can be added to graphs instead of utilizing the same name as the columns."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics-3",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics-3",
+    "title": "Take-home_Ex2",
+    "section": "6.3 Aesthetics",
+    "text": "6.3 Aesthetics"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-make-correlation-line-more-pronounce",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-make-correlation-line-more-pronounce",
+    "title": "Take-home_Ex2",
+    "section": "(a) Make correlation line more pronounce",
+    "text": "(a) Make correlation line more pronounce"
   }
 ]
