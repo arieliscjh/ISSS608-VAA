@@ -710,15 +710,15 @@
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#clarity-1",
     "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#clarity-1",
     "title": "Take-home_Ex2",
-    "section": "5.2 Clarity",
-    "text": "5.2 Clarity"
+    "section": "4.2 Clarity",
+    "text": "4.2 Clarity"
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-redundant-plot--violin-boxplot",
     "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-redundant-plot--violin-boxplot",
     "title": "Take-home_Ex2",
     "section": "(a) Redundant plot- violin + boxplot",
-    "text": "(a) Redundant plot- violin + boxplot\nonly violin already can demonstrate the distribution\nscatter plot did not tell useful information and it’s usually to represent the relationship"
+    "text": "(a) Redundant plot- violin + boxplot\nIn this raincloud plot, it demonstrate the probability density and key summary statistics in a diverse format which including scatter, boxplot, and density. For this case, the objective is to see if there is difference on academic performance between genders. From looking this chart, it might confuse readers where to start from, so they could not able to get a fast conclusion. Therefore, a combination of a violin and a boxplot maybe can help to generate a clearer visualization."
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-mean-score-presentation",
@@ -731,15 +731,15 @@
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics-1",
     "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics-1",
     "title": "Take-home_Ex2",
-    "section": "3.3 Aesthetics",
-    "text": "3.3 Aesthetics"
+    "section": "4.3 Aesthetics",
+    "text": "4.3 Aesthetics"
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-change-of-layout",
     "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-change-of-layout",
     "title": "Take-home_Ex2",
     "section": "(a) Change of layout",
-    "text": "(a) Change of layout"
+    "text": "(a) Change of layout\nA vertical layout of the boxplot to compare the mean of scores could be better fit readers’ habits."
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#original-design-2",
@@ -773,8 +773,8 @@
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics-2",
     "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics-2",
     "title": "Take-home_Ex2",
-    "section": "3.3 Aesthetics",
-    "text": "3.3 Aesthetics"
+    "section": "5.3 Aesthetics",
+    "text": "5.3 Aesthetics"
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-redundant-title-1",
@@ -794,8 +794,8 @@
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#sketch-of-proposed-design-1",
     "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#sketch-of-proposed-design-1",
     "title": "Take-home_Ex2",
-    "section": "3.4 Sketch of Proposed Design",
-    "text": "3.4 Sketch of Proposed Design\nRough sketch of proposed design is shown below"
+    "section": "4.4 Sketch of Proposed Design",
+    "text": "4.4 Sketch of Proposed Design\nRough sketch of proposed design is shown below"
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#original-design-3",
@@ -823,7 +823,7 @@
     "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-axes-labeling-2",
     "title": "Take-home_Ex2",
     "section": "(b) Axes Labeling",
-    "text": "(b) Axes Labeling\nIt is sometimes the case that column names like PVmath and ESCS will not make sense to users while viewing the charts, thus new axes labels can be added to graphs instead of utilizing the same name as the columns."
+    "text": "(b) Axes Labeling\nIt is sometimes the case that column names like PVmath and y will not make sense to users while viewing the charts, thus new axes labels can be added to graphs instead of utilizing the same name as the columns."
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#aesthetics-3",
@@ -838,5 +838,54 @@
     "title": "Take-home_Ex2",
     "section": "(a) Make correlation line more pronounce",
     "text": "(a) Make correlation line more pronounce"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#c-mean-score-presentation",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#c-mean-score-presentation",
+    "title": "Take-home_Ex2",
+    "section": "(c) Mean score presentation",
+    "text": "(c) Mean score presentation\nInstead of only line without specific number, it will be more clear to readers after put the specific score for mean"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#final-design-1",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#final-design-1",
+    "title": "Take-home_Ex2",
+    "section": "4.5 Final Design",
+    "text": "4.5 Final Design\nAfter conduct the changes list above, here is the final design:"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#sketch-of-proposed-design-2",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#sketch-of-proposed-design-2",
+    "title": "Take-home_Ex2",
+    "section": "5.4 Sketch of Proposed Design",
+    "text": "5.4 Sketch of Proposed Design\nRough sketch of proposed design is shown below"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#final-design-2",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#final-design-2",
+    "title": "Take-home_Ex2",
+    "section": "5.5 Final Design",
+    "text": "5.5 Final Design\nAfter conduct the changes list above, here is the final design:"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-axes-labeling-3",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-axes-labeling-3",
+    "title": "Take-home_Ex2",
+    "section": "(b) Axes Labeling",
+    "text": "(b) Axes Labeling\nIt is sometimes the case that column names like PVmath and ESCS will not make sense to users while viewing the charts, thus new axes labels can be added to graphs instead of utilizing the same name as the columns."
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#sketch-of-proposed-design-3",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#sketch-of-proposed-design-3",
+    "title": "Take-home_Ex2",
+    "section": "6.4 Sketch of Proposed Design",
+    "text": "6.4 Sketch of Proposed Design\nRough sketch of proposed design is shown below"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#final-design-3",
+    "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#final-design-3",
+    "title": "Take-home_Ex2",
+    "section": "6.5 Final Design",
+    "text": "6.5 Final Design\nAfter conduct the changes list above, here is the final design:"
   }
 ]

@@ -57,13 +57,13 @@ read_rds("data/stu_qqq_SG.rds")
 
 The original design is shown below
 
-![](images/plot 1.png){width="503"}
+![](images/plot%201.png){width="503"}
 
 Usage of Histogram is reasonable and appropriate as it fulfill the objectives of demonstrating the distribution of math, reading, and science score. However, this chart can be improved in following criteria.
 
-## 3.2 Clarity 
+## 3.2 Clarity
 
-## *(a) Graph Title* 
+## *(a) Graph Title*
 
 The title is concise and can reflect the content of histogram. However, it might be not clear and straightforward enough for people have a fast understanding when they read it since there is words that shows certain level of conjecture.
 
@@ -71,13 +71,13 @@ The title is concise and can reflect the content of histogram. However, it might
 
 It is sometimes the case that column names like PVmath and y will not make sense to users while viewing the charts, thus new axes labels can be added to graphs instead of utilizing the same name as the columns.
 
-## 3.3 Aesthetics 
+## 3.3 Aesthetics
 
-## *(a) Redundant title* 
+## *(a) Redundant title*
 
 Since the name of the x-axis already can represent the content of the graph, it is not necessary to add the sub-title.
 
-## *(b) Gridlines-Vertical* 
+## *(b) Gridlines-Vertical*
 
 Since the original graph already marked down the max, min, and mean value, besides the tick marks already marked on the x-axis, it is not necessary to have the vertical gridline.
 
@@ -85,7 +85,7 @@ Since the original graph already marked down the max, min, and mean value, besid
 
 Rough sketch of proposed design is shown below
 
-## 3.5. Rename the variable 
+## 3.5. Rename the variable
 
 ```{r}
 stu_qqq_1<-stu_qqq_SG %>%
@@ -95,7 +95,7 @@ stu_qqq_1<-stu_qqq_SG %>%
            Science_Score="PV1SCIE"))
 ```
 
-## 3.6 Final Design 
+## 3.6 Final Design
 
 After conduct the changes list above, here is the final design:
 
@@ -196,21 +196,33 @@ The original design is shown below
 
 ![](images/plot2.png){width="548"}
 
-## 5.2 Clarity
+## 4.2 Clarity
 
 ## *(a) Redundant plot- violin + boxplot*
 
-only violin already can demonstrate the distribution
+In this raincloud plot, it demonstrate the probability density and key summary statistics in a diverse format which including scatter, boxplot, and density. For this case, the objective is to see if there is difference on academic performance between genders. From looking this chart, it might confuse readers where to start from, so they could not able to get a fast conclusion. Therefore, a combination of a violin and a boxplot maybe can help to generate a clearer visualization.
 
-scatter plot did not tell useful information and it's usually to represent the relationship
+## *(b) Axes Labeling*
 
-## *(b) Mean score presentation* 
+It is sometimes the case that column names like PVmath and y will not make sense to users while viewing the charts, thus new axes labels can be added to graphs instead of utilizing the same name as the columns.
 
-Instead of only line without specific number, it will be more clear to readers after put the specific score
+## *(c) Mean score presentation*
 
-## 3.3 Aesthetics 
+Instead of only line without specific number, it will be more clear to readers after put the specific score for mean
+
+## 4.3 Aesthetics
 
 ## *(a) Change of layout*
+
+A vertical layout of the boxplot to compare the mean of scores could be better fit readers' habits.
+
+## 4.4 Sketch of Proposed Design
+
+Rough sketch of proposed design is shown below
+
+## 4.5 Final Design
+
+After conduct the changes list above, here is the final design:
 
 # 5. Critique 3
 
@@ -220,9 +232,9 @@ The original design is shown below
 
 ![](images/plot3.png){width="433"}
 
-## 5.2 Clarity 
+## 5.2 Clarity
 
-## *(a) Alternative chart type for better presentation* 
+## *(a) Alternative chart type for better presentation*
 
 Current chart type it's inappropriate in this question, since heatmap it's specifically build for categorical data. In this case, Student's score it's a continuous data and the number of school ID its too many to visualize in a clear and straightforward way. Bar chart might can consider to use after recode students's performance score into different score range which is categorical data.
 
@@ -230,19 +242,23 @@ Current chart type it's inappropriate in this question, since heatmap it's speci
 
 It is sometimes the case that column names like PVmath and y will not make sense to users while viewing the charts, thus new axes labels can be added to graphs instead of utilizing the same name as the columns.
 
-## 3.3 Aesthetics 
+## 5.3 Aesthetics
 
-## *(a) Redundant title* 
+## *(a) Redundant title*
 
 Since the name of the x-axis already can represent the content of the graph, it is not necessary to add the sub-title.
 
-## *(b) Gridlines-Vertical* 
+## *(b) Gridlines-Vertical*
 
 Since the original graph already marked down the max, min, and mean value, besides the tick marks already marked on the x-axis, it is not necessary to have the vertical gridline.
 
-## 3.4 Sketch of Proposed Design
+## 5.4 Sketch of Proposed Design
 
 Rough sketch of proposed design is shown below
+
+## 5.5 Final Design
+
+After conduct the changes list above, here is the final design:
 
 # 6. Critique 4
 
@@ -250,14 +266,22 @@ Rough sketch of proposed design is shown below
 
 ![](images/plot4.png){width="390"}
 
-## 6.2 Clarity 
+## 6.2 Clarity
 
-## *(a) Display position of R square* 
+## *(a) Display position of R square*
 
 ## *(b) Axes Labeling*
 
 It is sometimes the case that column names like PVmath and ESCS will not make sense to users while viewing the charts, thus new axes labels can be added to graphs instead of utilizing the same name as the columns.
 
-## 6.3 Aesthetics 
+## 6.3 Aesthetics
 
-## *(a) Make correlation line more pronounce* 
+## *(a) Make correlation line more pronounce*
+
+## 6.4 Sketch of Proposed Design
+
+Rough sketch of proposed design is shown below
+
+## 6.5 Final Design
+
+After conduct the changes list above, here is the final design:
