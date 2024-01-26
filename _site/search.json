@@ -816,7 +816,7 @@
     "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-display-position-of-r-square",
     "title": "Take-home_Ex2",
     "section": "(a) Display position of R square",
-    "text": "(a) Display position of R square"
+    "text": "(a) Display position of R square\nSince the R square represent the strength of the correlation, the position of the R square could be move to next to the linear line for reader to get a quick view of the statistic of the scatter plot to understand the strength."
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#b-axes-labeling-2",
@@ -837,21 +837,21 @@
     "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#a-make-correlation-line-more-pronounce",
     "title": "Take-home_Ex2",
     "section": "(a) Make correlation line more pronounce",
-    "text": "(a) Make correlation line more pronounce"
+    "text": "(a) Make correlation line more pronounce\nFor the reading score and social economic status score, the correlation line is having difficulty to read. Therefore, making the line thicker could solve the problem."
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#c-mean-score-presentation",
     "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#c-mean-score-presentation",
     "title": "Take-home_Ex2",
     "section": "(c) Mean score presentation",
-    "text": "(c) Mean score presentation\nInstead of only line without specific number, it will be more clear to readers after put the specific score for mean"
+    "text": "(c) Mean score presentation\nInstead of only line without specific number, it will be more clear to readers after put the specific score for mean."
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#final-design-1",
     "href": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#final-design-1",
     "title": "Take-home_Ex2",
     "section": "4.5 Final Design",
-    "text": "4.5 Final Design\nAfter conduct the changes list above, here is the final design:"
+    "text": "4.5 Final Design\nAfter conduct the changes list above, here is the final design:\n\nstu_qqq_2&lt;-stu_qqq_SG %&gt;%\n  select(PV1MATH,PV1READ, PV1SCIE, ST004D01T)%&gt;%\n  rename(c(Math_Score= \"PV1MATH\",\n           Reading_Score=\"PV1READ\",\n           Science_Score=\"PV1SCIE\",\n           Gender = \"ST004D01T\"))%&gt;%\n  mutate(Gender = recode(Gender, \n                         \"1\" = \"Female\", \n                         \"2\" = \"Male\"))\nstu_qqq_2$Gender &lt;- as.factor(stu_qqq_2$Gender)\n\n\ngendermath &lt;- ggplot(data = stu_qqq_2,\n       aes(x = Gender,\n           y = Math_Score)) +\n  geom_violin() +\n  stat_boxplot(geom = \"errorbar\", \n               width = 0.25,\n               color = c(\"red\",'blue'))+\n  geom_boxplot(color = c(\"red\",'blue')) +\n  geom_point(stat = \"summary\",        \n             fun.y = \"mean\",           \n             colour = \"black\",          \n             size = 2) +\n  labs(x = \"Math's Score\") +\n  scale_y_continuous(\"Score\", breaks = seq(150,850,50), limits = c(150,850))+\n    theme(panel.background = element_rect(fill=\"white\",colour=\"white\"),\n          panel.grid.major = element_line(color = \"grey80\"),\n          panel.grid.minor = element_blank(),\n          panel.grid.major.x = element_blank())\n\ngenderreading &lt;- ggplot(data = stu_qqq_2,\n       aes(x = Gender,\n           y = Reading_Score)) +\n  geom_violin() +\n  stat_boxplot(geom = \"errorbar\", \n               width = 0.25,\n               color = c(\"red\",'blue'))+\n  geom_boxplot(color = c(\"red\",'blue')) +\n  geom_point(stat = \"summary\",        \n             fun.y = \"mean\",           \n             colour = \"black\",          \n             size = 2) +\n  labs(x = \"Reading's Score\") +\n  scale_y_continuous(NULL, breaks = seq(150,850,50), limits = c(150,850))+\n    theme(panel.background = element_rect(fill=\"white\",colour=\"white\"),\n          panel.grid.major = element_line(color = \"grey80\"),\n          panel.grid.minor = element_blank(),\n          panel.grid.major.x = element_blank())\n\ngenderscience &lt;- ggplot(data = stu_qqq_2,\n       aes(x = Gender,\n           y = Science_Score)) +\n  geom_violin() +\n  stat_boxplot(geom = \"errorbar\", \n               width = 0.25,\n               color = c(\"red\",'blue'))+\n  geom_boxplot(color = c(\"red\",'blue')) +\n  geom_point(stat = \"summary\",        \n             fun.y = \"mean\",           \n             colour = \"black\",          \n             size = 2) +\n  labs(x = \"Science's Score\") +\n  scale_y_continuous(NULL, breaks = seq(150,850,50), limits = c(150,850))+\n    theme(panel.background = element_rect(fill=\"white\",colour=\"white\"),\n          panel.grid.major = element_line(color = \"grey80\"),\n          panel.grid.minor = element_blank(),\n          panel.grid.major.x = element_blank())\n\ngendermath+genderreading+genderscience+ plot_annotation(\n  title = 'Students\\' academic Performance between Gender',\n  theme = theme(plot.title = element_text(hjust = 0.6))\n)"
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex2/Take-home_Ex2.html#sketch-of-proposed-design-2",
