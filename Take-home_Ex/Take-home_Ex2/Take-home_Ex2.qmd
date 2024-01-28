@@ -85,9 +85,20 @@ Since the original graph already marked down the max, min, and mean value, besid
 
 Rough sketch of proposed design is shown below
 
-## 3.5. Rename the variable
+![](images/1.jpg){width="415"}
+
+## 3.5 Final Design
+
+After conduct the changes list above, here is the final design:
+
+::: panel-tabset
+## Data preparation
 
 ```{r}
+#Rename the variable 
+#| code-fold: true
+#| code-summary: “Show the code”
+
 stu_qqq_1<-stu_qqq_SG %>%
   select(PV1MATH,PV1READ, PV1SCIE)%>%
   rename(c(Math_Score= "PV1MATH",
@@ -95,11 +106,12 @@ stu_qqq_1<-stu_qqq_SG %>%
            Science_Score="PV1SCIE"))
 ```
 
-## 3.6 Final Design
-
-After conduct the changes list above, here is the final design:
+## Visualization
 
 ```{r}
+#| code-fold: true
+#| code-summary: “Show the code”
+
 maths_mean <- mean(stu_qqq_1$Math_Score)
 maths_min <- min(stu_qqq_1$Math_Score)
 maths_max <- max(stu_qqq_1$Math_Score)
@@ -187,6 +199,7 @@ hist_maths + hist_read + hist_science +
   plot_annotation("Distribution of Plausible Values for Each Subject",
 theme = theme(plot.title = element_text(hjust = 0.5)))
 ```
+:::
 
 # 4. Critique 2
 
@@ -220,11 +233,21 @@ A vertical layout of the boxplot to compare the mean of scores could be better f
 
 Rough sketch of proposed design is shown below
 
+![](images/2.jpg){width="439"}
+
 ## 4.5 Final Design
 
 After conduct the changes list above, here is the final design:
 
+::: panel-tabset
+## Data preparation 
+
 ```{r}
+#Rename the variable 
+#| code-fold: true
+#| code-summary: “Show the code”
+
+
 stu_qqq_2<-stu_qqq_SG %>%
   select(PV1MATH,PV1READ, PV1SCIE, ST004D01T)%>%
   rename(c(Math_Score= "PV1MATH",
@@ -234,8 +257,11 @@ stu_qqq_2<-stu_qqq_SG %>%
   mutate(Gender = recode(Gender, 
                          "1" = "Female", 
                          "2" = "Male"))
+#Change data type
 stu_qqq_2$Gender <- as.factor(stu_qqq_2$Gender)
 ```
+
+## Visualization 
 
 ```{r}
 gendermath <- ggplot(data = stu_qqq_2,
@@ -257,6 +283,7 @@ gendermath <- ggplot(data = stu_qqq_2,
           panel.grid.minor = element_blank(),
           panel.grid.major.x = element_blank())
 
+
 genderreading <- ggplot(data = stu_qqq_2,
        aes(x = Gender,
            y = Reading_Score)) +
@@ -275,6 +302,7 @@ genderreading <- ggplot(data = stu_qqq_2,
           panel.grid.major = element_line(color = "grey80"),
           panel.grid.minor = element_blank(),
           panel.grid.major.x = element_blank())
+
 
 genderscience <- ggplot(data = stu_qqq_2,
        aes(x = Gender,
@@ -302,6 +330,7 @@ gendermath+genderreading+genderscience+ plot_annotation(
 
 
 ```
+:::
 
 # 5. Critique 3
 
@@ -335,71 +364,111 @@ Since the original graph already marked down the max, min, and mean value, besid
 
 Rough sketch of proposed design is shown below
 
+![](images/3.jpg){width="440"}
+
 ## 5.5 Final Design
 
 After conduct the changes list above, here is the final design:
 
+::: panel-tabset
+## Data Preparation
+
 ```{r}
+#| code-fold: true
+#| code-summary: “Show the code”
+
+# Rename the variable
 stu_qqq_3<-stu_qqq_SG %>%
   select(PV1MATH,PV1READ, PV1SCIE, CNTSCHID)%>%
   rename(c(Math_Score= "PV1MATH",
            Reading_Score="PV1READ",
            Science_Score="PV1SCIE",
            School_ID = "CNTSCHID"))
-```
-
-```{r}
+#Remove NA value & Calculate average group by school_ID
 stu_qqq_3_NO_NA <- stu_qqq_3 %>%
   select(Math_Score, Science_Score, Reading_Score, School_ID) %>%
   drop_na()
-```
+stu_avg_score <- stu_qqq_3_NO_NA %>%
+  group_by(School_ID) %>%
+  mutate(math_avg = mean(Math_Score),
+         science_avg = mean(Science_Score),
+         reading_avg = mean(Reading_Score)) %>%
+  select(School_ID, math_avg, science_avg, reading_avg) %>%
+  unique() 
 
-```{r}
-stu_qqq_3.1 <- stu_qqq_3_NO_NA %>%
-  mutate(Math_Score_Range = cut(Math_Score, 
-                                breaks = c(100, 200, 400, 600, 800, 1000), 
-                                labels = c("100-200", "201-400", "401-600", 
-                                           "601-800", "801-1000"),
+#Check range of value in the dataset
+summary(stu_avg_score$math_avg)
+summary(stu_avg_score$science_avg)
+summary(stu_avg_score$reading_avg)
+
+#Recode score range 
+stu_qqq_3.1 <- stu_avg_score %>%
+  mutate(Math_Score_Range = cut(math_avg, 
+                                breaks = c(300, 400, 500, 600, 700, 800), 
+                                labels = c("300-400", "401-500", "501-600", 
+                                           "601-700", "701-800"),
                                 include.lowest = TRUE),
-         Science_Score_Range = cut(Science_Score, 
-                                breaks = c(100, 200, 400, 600, 800, 1000), 
-                                labels = c("100-200", "201-400", "401-600", 
-                                           "601-800", "801-1000"),
+         Science_Score_Range = cut(science_avg, 
+                                breaks = c(300, 400, 500, 600, 700, 800), 
+                                labels = c("300-400", "401-500", "501-600", 
+                                           "601-700", "701-800"),
                                 include.lowest = TRUE),
-         Reading_Score_Range = cut(Reading_Score, 
-                                breaks = c(100, 200, 400, 600, 800, 1000), 
-                                labels = c("100-200", "201-400", "401-600", 
-                                           "601-800", "801-1000"),
+         Reading_Score_Range = cut(reading_avg, 
+                                breaks = c(300, 400, 500, 600, 700, 800), 
+                                labels = c("300-400", "401-500", "501-600", 
+                                           "601-700", "701-800"),
                                 include.lowest = TRUE))
 ```
 
+## Visualization
+
 ```{r}
+#| code-fold: true
+#| code-summary: “Show the code”
+
 
 p1<-ggplot(data = stu_qqq_3.1,
        aes(x = Math_Score_Range)) +
   geom_bar(width = 0.5,
            color = "grey30",
-           fill = "white")+
-  labs(y = "number of school") +
-  ggtitle("Difference of academic performance among schools")+
-  theme(plot.title = element_text(hjust = 0.5)) 
+           fill = "purple")+
+  scale_y_continuous("number of school", limits = c(0,125), breaks = seq(0,125,25)) +
+  theme(axis.text.x = element_text(size = 6.5),
+        panel.grid.major = element_line(color = 'black'),
+        panel.grid.minor = element_line(color = 'gray20'),
+        panel.grid.major.x = element_blank(),
+        panel.background = element_rect(fill = 'white')) 
 
 p2<-ggplot(data = stu_qqq_3.1,
        aes(x = Science_Score_Range)) +
   geom_bar(width = 0.5,
            color = "grey30",
-           fill = "white") +
-  labs(y = NULL)
+           fill = "purple") +
+  scale_y_continuous(NULL, limits = c(0,125), breaks = seq(0,125,25)) +
+  theme(axis.text.x = element_text(size = 6.5),
+        panel.grid.major = element_line(color = 'black'),
+        panel.grid.minor = element_line(color = 'gray20'),
+        panel.grid.major.x = element_blank(),
+        panel.background = element_rect(fill = 'white')) 
 
 p3<-ggplot(data = stu_qqq_3.1,
        aes(x = Reading_Score_Range)) +
   geom_bar(width = 0.5,
            color = "grey30",
-           fill = "white")+
-  labs(y = NULL)
+           fill = "purple")+
+  scale_y_continuous(NULL, limits = c(0,125), breaks = seq(0,125,25)) +
+  theme(axis.text.x = element_text(size = 6.5),
+        panel.grid.major = element_line(color = 'black'),
+        panel.grid.minor = element_line(color = 'gray20'),
+        panel.grid.major.x = element_blank(),
+        panel.background = element_rect(fill = 'white')) 
 
-p1+p2+p3
+p1+p2+p3+plot_annotation(
+  title = "Difference of academic perfomance among schools",
+  theme = theme(plot.title = element_text(hjust = 0.6))
+)
 ```
+:::
 
 # 6. Critique 4
 
@@ -427,11 +496,21 @@ For the reading score and social economic status score, the correlation line is 
 
 Rough sketch of proposed design is shown below
 
+![](images/4.jpg){width="455"}
+
 ## 6.5 Final Design
 
 After conduct the changes list above, here is the final design:
 
+::: panel-tabset
+## Data Preparation 
+
 ```{r}
+#| code-fold: true
+#| code-summary: “Show the code”
+
+
+# Rename the variable
 stu_qqq_4<-stu_qqq_SG %>%
   select(PV1MATH,PV1READ, PV1SCIE,ESCS)%>%
   rename(c(Math_Score= "PV1MATH",
@@ -439,7 +518,13 @@ stu_qqq_4<-stu_qqq_SG %>%
            Science_Score="PV1SCIE"))
 ```
 
+## Visualization
+
 ```{r}
+#| code-fold: true
+#| code-summary: “Show the code”
+
+
 cor_Math <- round(cor(stu_qqq_4$Math_Score, stu_qqq_4$ESCS, use = "complete.obs"), 2)
 cor_Reading <- round(cor(stu_qqq_4$Reading_Score, stu_qqq_4$ESCS, use = "complete.obs"), 2)
 cor_Science <- round(cor(stu_qqq_4$Science_Score, stu_qqq_4$ESCS, use = "complete.obs"), 2)
@@ -450,27 +535,34 @@ p1<-ggplot(data = stu_qqq_4,
   geom_point(size = 1)+
   geom_smooth(method = lm) + 
   annotate("text", x=0, y=500, label=paste0("r = ", cor_Math), color = 'green')+
-  labs(x = "socioeconomic status score") +
+  ylim(c(0,900))+
+  labs(x = NULL) +
   ggtitle("Relationship between Students' academic and socioeconomic status")+
-  theme(plot.title = element_text(hjust = 0.5)) 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_minimal()
 
 p2<-ggplot(data = stu_qqq_4,
        aes(y = Reading_Score, x = ESCS)) +
   geom_point(size = 1)+
   geom_smooth(method = lm) + 
   annotate("text", x=0, y=500, label=paste0("r = ", cor_Reading), color = 'green')+
-  labs(x = "socioeconomic status score")
+  ylim(c(0,900))+
+  labs(x =NULL)+
+  theme_minimal()
 
 p3<-ggplot(data = stu_qqq_4,
        aes(y = Science_Score, x = ESCS)) +
   geom_point(size = 1)+
   geom_smooth(method = lm) + 
   annotate("text", x=0, y=500, label=paste0("r = ", cor_Science), color = 'green')+
-  labs(x = "socioeconomic status score")
+  ylim(c(0,900))+
+  labs(x = "socioeconomic status score")+
+  theme_minimal()
 
 combined_plot <- p1/p2/p3
 
-combined_plot <- combined_plot + plot_layout(heights = c(7, 7, 7))
+combined_plot <- combined_plot + plot_layout(heights = c(9,9,9))
 
 combined_plot
 ```
+:::
