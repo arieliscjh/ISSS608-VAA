@@ -240,7 +240,7 @@ Rough sketch of proposed design is shown below
 After conduct the changes list above, here is the final design:
 
 ::: panel-tabset
-## Data preparation 
+## Data preparation
 
 ```{r}
 #Rename the variable 
@@ -261,7 +261,7 @@ stu_qqq_2<-stu_qqq_SG %>%
 stu_qqq_2$Gender <- as.factor(stu_qqq_2$Gender)
 ```
 
-## Visualization 
+## Visualization
 
 ```{r}
 gendermath <- ggplot(data = stu_qqq_2,
@@ -503,7 +503,7 @@ Rough sketch of proposed design is shown below
 After conduct the changes list above, here is the final design:
 
 ::: panel-tabset
-## Data Preparation 
+## Data Preparation
 
 ```{r}
 #| code-fold: true
