@@ -1061,7 +1061,7 @@
     "href": "Hands-on_Ex/Hands-on_Ex4/Hands-on_Ex4.html#overview",
     "title": "Hands-on_Ex4",
     "section": "12.1 Overview",
-    "text": "12.1 Overview\nFunnel plot is a specially designed data visualisation for conducting unbiased comparison between outlets, stores or business entities."
+    "text": "12.1 Overview\nFunnel plot is a specially designed data visualisation for conducting unbiased comparison between outlets, stores or business entities.\n\n12.2 Loading Packages\n\npacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)\n\n\ncovid19 &lt;- read_csv(\"data/COVID-19_DKI_Jakarta.csv\") %&gt;%\n  mutate_if(is.character, as.factor)"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex4/Hands-on_Ex4.html#loading-packages-1",

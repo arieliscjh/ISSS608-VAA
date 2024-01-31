@@ -9,7 +9,7 @@ execute:
 editor: visual 
 ---
 
-# Visualizing Distribution
+# 9.Visualizing Distribution
 
 ## 9.1 Learning outcome
 
@@ -212,7 +212,7 @@ ggplot(exam,
   theme_economist()
 ```
 
-# Visual Statistical Analysis
+# 10. Visual Statistical Analysis
 
 ## 10.1 Learning Outcome
 
@@ -675,7 +675,7 @@ ggplot(data = exam,
 
 Funnel plot is a specially designed data visualisation for conducting unbiased comparison between outlets, stores or business entities.
 
-## 12.2 Loading Packages
+### 12.2 Loading Packages
 
 ```{r}
 pacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)
