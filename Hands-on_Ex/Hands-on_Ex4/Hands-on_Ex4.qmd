@@ -437,7 +437,7 @@ pacman::p_load(ungeviz, plotly, crosstalk,
                colorspace, gganimate, tidyverse)
 ```
 
-### 11.2.2 Data import 
+### 11.2.2 Data import
 
 ```{r}
 exam <- read_csv("data/Exam_data.csv")
@@ -589,7 +589,7 @@ confidence intervals of median math score
 ```{r}
 exam %>%
   ggplot(aes(x = RACE, y = MATHS)) +
-  stat_pointinterval(.width = 0.95,
+  stat_pointinterval(.width = c(0.95, 0.99),
   .point = median,
   .interval = qi) +
   labs(
@@ -669,13 +669,13 @@ ggplot(data = exam,
   transition_states(.draw, 1, 3)
 ```
 
-## 12. Funnel plots for fair comparison
+# 12. Funnel plots for fair comparison
 
-### 12.1 Overview
+## 12.1 Overview
 
 Funnel plot is a specially designed data visualisation for conducting unbiased comparison between outlets, stores or business entities.
 
-### 12.2 Loading Packages 
+## 12.2 Loading Packages
 
 ```{r}
 pacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)
@@ -686,7 +686,7 @@ covid19 <- read_csv("data/COVID-19_DKI_Jakarta.csv") %>%
   mutate_if(is.character, as.factor)
 ```
 
-## 12.4 FunnelPlotR methods 
+## 12.4 FunnelPlotR methods
 
 [**FunnelPlotR**](https://nhs-r-community.github.io/FunnelPlotR/) package uses ggplot to generate funnel plots. It requires a `numerator` (events of interest), `denominator` (population to be considered) and `group`. The key arguments selected for customisation are:
 
@@ -714,7 +714,7 @@ funnel_plot(
 
 -   `group` in this function is different from the scatterplot. Here, it defines the level of the points to be plotted i.e. Sub-district, District or City. If Cityc is chosen, there are only six data points.
 
--   By default, `data_type`argument is \"SR\".
+-   By default, `data_type`argument is "SR".
 
 -   `limit`: Plot limits, accepted values are: 95 or 99, corresponding to 95% or 99.8% quantiles of the distribution.
 
