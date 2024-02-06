@@ -166,7 +166,8 @@ girafe(ggobj = gg_point,
 p <- ggplot(data=exam_data, 
        aes(x = MATHS)) +
   geom_dotplot_interactive(           
-    aes(data_id = CLASS),             
+    aes(tooltip = CLASS, 
+        data_id = CLASS),             
     stackgroups = TRUE,               
     binwidth = 1,                        
     method = "histodot") +               
