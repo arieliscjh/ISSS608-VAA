@@ -11,7 +11,7 @@ editor: visual
 
 # 15 Visual Multivariate Analysis with Parallel Coordinates Plot
 
-## 15.1 Overview 
+## 15.1 Overview
 
 Parallel coordinates plot is a data visualisation specially designed for visualising and analysing multivariate, numerical data. It is ideal for comparing multiple variables together and seeing the relationships between them.
 
@@ -31,7 +31,7 @@ wh <- read_csv("data/WHData-2018.csv")
 
 ## 15.4 Plotting Static Parallel Coordinates Plot
 
-### 15.4.1 Plotting a simple parallel corrdinates 
+### 15.4.1 Plotting a simple parallel corrdinates
 
 ```{r}
 ggparcoord(data = wh, 
@@ -40,7 +40,7 @@ ggparcoord(data = wh,
 
 Notice that only two argument namely `data` and `columns` is used. `Data` argument is used to map the data object (i.e. *wh*) and `columns` is used to select the columns for preparing the parallel coordinates plot.
 
-### 15.4.2 Plotting a parallel coordinates with boxplot 
+### 15.4.2 Plotting a parallel coordinates with boxplot
 
 ```{r}
 ggparcoord(data = wh, 
@@ -62,7 +62,7 @@ ggparcoord(data = wh,
 
 -   `title` argument is used to provide the parallel coordinates plot a title.
 
-### 15.4.3 Parallel Coordinates with facet 
+### 15.4.3 Parallel Coordinates with facet
 
 Since `ggparcoord()` is developed by extending **ggplot2** package, we can combination use some of the ggplot2 function when plotting a parallel coordinates plot.
 
@@ -77,7 +77,7 @@ ggparcoord(data = wh,
   facet_wrap(~ Region)
 ```
 
-### 15.4.4 Rotating x-axis text label 
+### 15.4.4 Rotating x-axis text label
 
 ```{r}
 ggparcoord(data = wh, 
@@ -91,9 +91,9 @@ ggparcoord(data = wh,
   theme(axis.text.x = element_text(angle = 30))
 ```
 
-### 15.4.5 Adjusting the rotated x-axis text label 
+### 15.4.5 Adjusting the rotated x-axis text label
 
-Rotating x-axis text labels to 30 degrees makes the label overlap with the plot and we can avoid this by adjusting the text location using `hjust` argument to theme\'s text element with `element_text()`. 
+Rotating x-axis text labels to 30 degrees makes the label overlap with the plot and we can avoid this by adjusting the text location using `hjust` argument to theme's text element with `element_text()`. 
 
 ```{r}
 ggparcoord(data = wh, 
@@ -109,9 +109,9 @@ ggparcoord(data = wh,
 
 ## 15.5 Plotting interactive parallel coordinates plot: Parallelplot method
 
-[**parallelPlot**](https://cran.r-project.org/web/packages/parallelPlot/) is an R package specially designed to plot a parallel coordinates plot by using \'htmlwidgets\' package and [d3.js](https://d3js.org/).
+[**parallelPlot**](https://cran.r-project.org/web/packages/parallelPlot/) is an R package specially designed to plot a parallel coordinates plot by using 'htmlwidgets' package and [d3.js](https://d3js.org/).
 
-### 15.5.1 The basic plot 
+### 15.5.1 The basic plot
 
 ```{r}
 wh <- wh %>%
@@ -128,7 +128,7 @@ parallelPlot(wh,
              rotateTitle = TRUE)
 ```
 
-### 15.5.3 Changing the color scheme 
+### 15.5.3 Changing the color scheme
 
 ```{r}
 parallelPlot(wh,
