@@ -1,0 +1,66 @@
+---
+title: "Take-home_Ex3"
+date: "February 11,2024"
+date-modified: "last-modified"
+execute: 
+  eval: true 
+  echo: true
+  warning: false
+editor: visual 
+---
+
+# Overview: Climate Change in Singapore
+
+-   An increase of daily mean temperature
+
+-   The temperature difference between wet and dry month is predicted to increase
+
+# Objective
+
+Using interactive techniques to demonstrate data visualization of monthly temperature in Singapore between year 1983, 1993, 2003, 2013, 2023.
+
+# Data Preparation
+
+## 1.1 Loading R package
+
+Let's load the libraries and R package needed for this assignment using `pacman::p_load()` function:
+
+```{r}
+pacman::p_load(tidyverse, )
+```
+
+The loaded packages are:
+
+-   [tidverse](https://www.tidyverse.org/): data wrangling, tidying, reading/writing, parsing, and visualizing
+
+## 1.2 Dataset
+
+The dataset using in this assignment is taking from historical daily temperature or rainfall data in Meteorological service Singapore website.
+
+### 1.2.1 Import the datasets
+
+In this assignment, we will using data of daily temperature in Changi region from July of 1983, 1993, 2003, 2013, to 2023.
+
+```{r}
+period1<-read_csv("data/DAILYDATA_S24_202307.csv")
+```
+
+```{r}
+period2<-read_csv("data/DAILYDATA_S24_201307.csv")
+```
+
+```{r}
+perid3<-read_csv("data/DAILYDATA_S24_200307.csv")
+```
+
+```{r}
+perid4<-read_csv("data/DAILYDATA_S24_199307.csv")
+```
+
+```{r}
+perid5<-read_csv("data/DAILYDATA_S24_198307.csv")
+```
+
+# Visualization Techniques Selection
+
+# Data Visualization
