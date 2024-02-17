@@ -62,16 +62,15 @@ Step 1: Deriving weekday and hour of dayfields
 Before we can plot the calender heatmap, two new fields namely wkday and hour need to be derived
 
 ```{r}
-#| eval: false
-make_hr_wkday <- function(ts,sc,tz) {
-  real_times <-ymd_hms(ts,
-                       tz= tz[1],
-                       quiet= TRUE)
+make_hr_wkday <- function(ts, sc, tz) {
+  real_times <- ymd_hms(ts, 
+                        tz = tz[1], 
+                        quiet = TRUE)
   dt <- data.table(source_country = sc,
-                   wkday= weekdays(real_times),
-                   hour= hour(real_times))
+                   wkday = weekdays(real_times),
+                   hour = hour(real_times))
   return(dt)
-}
+  }
 ```
 
 -   [`ymd_hms()`](https://lubridate.tidyverse.org/reference/ymd_hms.html) and [`hour()`](https://lubridate.tidyverse.org/reference/hour.html) are from [**lubridate**](https://lubridate.tidyverse.org/) package, and
@@ -81,33 +80,33 @@ make_hr_wkday <- function(ts,sc,tz) {
 Step 2: Deriving the attacks tibble data frame: put the label for weekday
 
 ```{r}
-#| eval: false
 
-wkday_levels <- c('Saturday', 'Friday','Thursday', 'Wednesday', 'Tuesday', 'Monday', 'Sunday')
+wkday_levels <- c('Saturday', 'Friday', 
+                  'Thursday', 'Wednesday', 
+                  'Tuesday', 'Monday', 
+                  'Sunday')
 
 attacks <- attacks %>%
   group_by(tz) %>%
-  do(make_hr_wkday(.$timestamp,
-                   .$source_country,
-                   .$tz)) %>%
-  ungroup() %>%
-  mutate(wkday= factor(
-    wkday, levels=wkday_levels),
-    hour = factor(
-      hour,levels= 0:23 ))
+  do(make_hr_wkday(.$timestamp, 
+                   .$source_country, 
+                   .$tz)) %>% 
+  ungroup() %>% 
+  mutate(wkday = factor(
+    wkday, levels = wkday_levels),
+    hour  = factor(
+      hour, levels = 0:23))
 ```
 
 `mutate()` of **dplyr** package is used to convert *wkday* and *hour* fields into **factor** so they'll be ordered when plotting
 
 ```{r}
-#| eval: false
 kable(head(attacks))
 ```
 
 ### 17.4.5 Building the Calender Heatmaps
 
 ```{r}
-#| eval: false
 grouped <- attacks %>% 
   count(wkday, hour) %>% 
   ungroup() %>%
