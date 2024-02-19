@@ -165,7 +165,7 @@ In order to identify the top 4 countries with the highest number of attacks,
 -   save the results in a tibble data frame
 
 ```{r}
-#| eval: false
+
 attacks_by_country <- count(
   attacks, source_country) %>%
   mutate(percent = percent(n/sum(n))) %>%
@@ -175,7 +175,7 @@ attacks_by_country <- count(
 Step 2: you are required to extract the attack records of the top 4 countries from attacks data frame and save the data in a new tibble data frame
 
 ```{r}
-#| eval: false
+
 top4 <- attacks_by_country$source_country[1:4]
 top4_attacks <- attacks %>%
   filter(source_country %in% top4) %>%
@@ -191,7 +191,7 @@ top4_attacks <- attacks %>%
 Step 3: Plotting the multiple calender heatmap
 
 ```{r}
-#| eval: false
+
 ggplot(top4_attacks, 
        aes(hour, 
            wkday, 
