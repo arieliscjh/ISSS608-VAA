@@ -1,0 +1,14 @@
+{
+  "hash": "a68c921417921acae119e5d2a6a792d8",
+  "result": {
+    "markdown": "---\ntitle: \"Horizon Plot\"\nAuthor: \"Chen Jinghan\"\ndate: \"February 24,2024\"\ndate-modified: \"last-modified\"\nexecute: \n  eval: false\n  echo: false\n  freeze: true \n  message: false \n  warning: false \n---\n\n\n# 1. Loading R Package \n\n\n::: {.cell}\n\n:::\n\n\n# 2. Data import \n\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
