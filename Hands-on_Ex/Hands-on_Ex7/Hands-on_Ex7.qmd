@@ -449,17 +449,17 @@ tm_shape(mpsz_pop2020[mpsz_pop2020$REGION_N=="CENTRAL REGION", ])+
 
 The current graph its only one certain region in singapore
 
-# 22. Visualizing geospatial point data 
+# 22. Visualizing geospatial point data
 
-## 22.1 Overview 
+## 22.1 Overview
 
 Proportional symbol maps (also known as graduate symbol maps) are a class of maps that use the **visual variable of size** to represent **differences in the magnitude of a discrete**, abruptly changing phenomenon, e.g. counts of people.
 
 -   The classed ones are known as range-graded or graduated symbols,
 
--    the unclassed are called proportional symbols, where the area of the symbols are proportional to the values of the attribute being mapped.
+-   the unclassed are called proportional symbols, where the area of the symbols are proportional to the values of the attribute being mapped.
 
-## 22.2 Learning Outcome 
+## 22.2 Learning Outcome
 
 -   To import an aspatial data file
 
@@ -467,7 +467,7 @@ Proportional symbol maps (also known as graduate symbol maps) are a class of map
 
 -   plot interactive proportional symbol maps
 
-## 22.3 Getting Started 
+## 22.3 Getting Started
 
 ```{r}
 pacman::p_load(sf, tmap, tidyverse)
@@ -475,7 +475,7 @@ pacman::p_load(sf, tmap, tidyverse)
 
 ## 22.4 Data wrangling
 
-### 22.4.1 Data import and preparation 
+### 22.4.1 Data import and preparation
 
 ```{r}
 sgpools <- read_csv("data/aspatial/SGPools_svy21.csv")
@@ -487,7 +487,7 @@ Examine the data
 list(sgpools) 
 ```
 
-### 22.4.1 Data import and preparation 
+### 22.4.1 Data import and preparation
 
 convert sgpools data frame into a simple feature data frame
 
@@ -531,7 +531,7 @@ tm_bubbles(col = "red",
            border.lwd = 1)
 ```
 
-### 22.5.3 Lets give it a different color 
+### 22.5.3 Lets give it a different color
 
 ```{r}
 tm_shape(sgpools_sf)+
@@ -560,11 +560,11 @@ Switch tmap's viewer back to the plot
 tmap_mode("plot")
 ```
 
-# 23. Analytical mapping 
+# 23. Analytical mapping
 
-## 23.1 Overview 
+## 23.1 Overview
 
-### 23.1.2 Learning Outcome 
+### 23.1.2 Learning Outcome
 
 -   Creating cartographic quality choropleth maps
 
@@ -574,21 +574,21 @@ tmap_mode("plot")
 
 -   creating boxmap
 
-## 23.2 Getting Started 
+## 23.2 Getting Started
 
-### 23.2.1 Loading R package 
+### 23.2.1 Loading R package
 
 ```{r}
 pacman::p_load(tmap, tidyverse, sf)
 ```
 
-### 23.2.2 Importing data 
+### 23.2.2 Importing data
 
 ```{r}
 NGA_wp <- read_rds("data/rds/NGA_wp.rds")
 ```
 
-## 23.3 Basic choropleth 
+## 23.3 Basic choropleth
 
 ### 23.3.1 Visualizing distribution of non-functional water point
 
@@ -620,9 +620,9 @@ p2 <- tm_shape(NGA_wp) +
 tmap_arrange(p2, p1, nrow = 1)
 ```
 
-## 23.4 Choropleth map for rates 
+## 23.4 Choropleth map for rates
 
-### 23.4.1 Deriving Proportion of functional water points and non-functional water points 
+### 23.4.1 Deriving Proportion of functional water points and non-functional water points
 
 ```{r}
 NGA_wp <- NGA_wp %>%
@@ -630,7 +630,7 @@ NGA_wp <- NGA_wp %>%
   mutate(pct_nonfunctional = wp_nonfunctional/total_wp)
 ```
 
-### 23.4.2 Plotting map of rate 
+### 23.4.2 Plotting map of rate
 
 ```{r}
 tm_shape(NGA_wp) +
@@ -717,7 +717,7 @@ percentmap <- function(vnam, df, legtitle=NA, mtitle="Percentile Map"){
 }
 ```
 
-#### 23.5.1.4 Test drive the percentile mapping function 
+#### 23.5.1.4 Test drive the percentile mapping function
 
 ```{r}
 percentmap("total_wp", NGA_wp)
@@ -813,7 +813,7 @@ boxbreaks(var)
 
 \- vnam: variable name (as character, in quotes)
 
- - df: simple features polygon layer
+-   df: simple features polygon layer
 
 \- legtitle: legend title
 
