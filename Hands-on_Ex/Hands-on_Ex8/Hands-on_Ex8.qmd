@@ -26,9 +26,9 @@ Main target: model, analyze and visualize network data
 
 -   build interactive network visualization
 
-# 27.2 Getting Started 
+# 27.2 Getting Started
 
-## 27.2.1 Loading R packages 
+## 27.2.1 Loading R packages
 
 ```{r}
 pacman::p_load(igraph, tidygraph, ggraph, 
@@ -38,20 +38,20 @@ pacman::p_load(igraph, tidygraph, ggraph,
 
 # 27.3 The data
 
-## 27.3.3 Import network data 
+## 27.3.3 Import network data
 
 ```{r}
 GAStech_nodes <- read_csv("data/GAStech_email_node.csv")
 GAStech_edges <- read_csv("data/GAStech_email_edge-v2.csv")
 ```
 
-## 27.3.4 Reviewing the imported data 
+## 27.3.4 Reviewing the imported data
 
 ```{r}
 glimpse(GAStech_edges)
 ```
 
-### 27.3.5 Wrangling time 
+### 27.3.5 Wrangling time
 
 ```{r}
 GAStech_edges <- GAStech_edges %>%
@@ -69,7 +69,7 @@ Things to learn from the code chunk above
 
 -   the values in the *Weekday* field are in ordinal scale.
 
-## 27.3.7 Wrangling attributes 
+## 27.3.7 Wrangling attributes
 
 Aggregate the individual by date, senders, receivers, main subject and day of the week
 
@@ -83,17 +83,17 @@ GAStech_edges_aggregated <- GAStech_edges %>%
   ungroup()
 ```
 
-## 27.3.7 Reviewing the revised edges file 
+## 27.3.7 Reviewing the revised edges file
 
 ```{r}
 glimpse(GAStech_edges_aggregated)
 ```
 
-# 27.4 Creating network objects using tidygraph 
+# 27.4 Creating network objects using tidygraph
 
 It provides a tidy API for graph/network manipulation. While network data itself is not tidy, it can be envisioned as two tidy tables, one for node data and one for edge data. tidygraph provides a way to switch between the two tables and provides dplyr verbs for manipulating them
 
-## 27.4.1 The tbl_graph object 
+## 27.4.1 The tbl_graph object
 
 -   [`tbl_graph()`](https://tidygraph.data-imaginist.com/reference/tbl_graph.html) creates a **tbl_graph** network object from nodes and edges data.
 
@@ -117,7 +117,7 @@ It provides a tidy API for graph/network manipulation. While network data itself
 
     -   graphNEL, graphAM, graphBAM from graph (in Bioconductor).
 
-## 27.4.1 The dplyr verbs in tidygraph 
+## 27.4.1 The dplyr verbs in tidygraph
 
 -   *activate()* verb from **tidygraph** serves as a switch between tibbles for nodes and edges.
 
@@ -131,23 +131,23 @@ GAStech_graph <- tbl_graph(nodes = GAStech_nodes,
                            directed = TRUE)
 ```
 
-## 27.4.4 Reviewing the output tidygraph\'s graph object
+## 27.4.4 Reviewing the output tidygraph's graph object
 
 ```{r}
 GAStech_graph
 ```
 
-## 27.4.5 Reviewing the output tidygraph\'s graph object
+## 27.4.5 Reviewing the output tidygraph's graph object
 
 -   The output above reveals that *GAStech_graph* is a tbl_graph object with 54 nodes and 4541 edges.
 
--   The command also prints the first six rows of \"Node Data\" and the first three of \"Edge Data\".
+-   The command also prints the first six rows of "Node Data" and the first three of "Edge Data".
 
 -   It states that the Node Data is **active**. The notion of an active tibble within a tbl_graph object makes it possible to manipulate the data in one tibble at a time.
 
 ## 27.4.6 Changing the active object
 
-The nodes tibble data frame is activated by default, but you can change which tibble data frame is active with the *activate()* function. Thus, if we wanted to rearrange the rows in the edges tibble to list those with the highest \"weight\" first, we could use *activate()* and then *arrange()*.
+The nodes tibble data frame is activated by default, but you can change which tibble data frame is active with the *activate()* function. Thus, if we wanted to rearrange the rows in the edges tibble to list those with the highest "weight" first, we could use *activate()* and then *arrange()*.
 
 ```{r}
 GAStech_graph %>%
@@ -155,9 +155,9 @@ GAStech_graph %>%
   arrange(desc(Weight))
 ```
 
-# 27.5 Plotting static network graphs with ggraph package 
+# 27.5 Plotting static network graphs with ggraph package
 
-As in all network graph, there are three main aspects to a **ggraph**\'s network graph, they are:
+As in all network graph, there are three main aspects to a **ggraph**'s network graph, they are:
 
 -   [nodes](https://cran.r-project.org/web/packages/ggraph/vignettes/Nodes.html),
 
@@ -165,7 +165,7 @@ As in all network graph, there are three main aspects to a **ggraph**\'s network
 
 -   [layouts](https://cran.r-project.org/web/packages/ggraph/vignettes/Layouts.html).
 
-## 27.5.1 Plotting a basic network graph 
+## 27.5.1 Plotting a basic network graph
 
 ```{r}
 ggraph(GAStech_graph) +
@@ -177,7 +177,7 @@ Things to learn from the code chunk above
 
 -   The basic plotting function is `ggraph()`, which takes the data to be used for the graph and the type of layout desired. Both of the arguments for `ggraph()` are built around *igraph*. Therefore, `ggraph()` can use either an *igraph* object or a *tbl_graph* object.
 
-## 27.5.2 Changing the default network graph theme 
+## 27.5.2 Changing the default network graph theme
 
 ```{r}
 g <- ggraph(GAStech_graph) + 
@@ -208,7 +208,7 @@ g + theme_graph(background = 'grey10',
 
 **ggraph** support many layout for standard used, they are: star, circle, nicely (default), dh, gem, graphopt, grid, mds, spahere, randomly, fr, kk, drl and lgl. Figures below and on the right show layouts supported by `ggraph()`.
 
-## 27.5.5 Fruchterman and reingold layout 
+## 27.5.5 Fruchterman and reingold layout
 
 ```{r}
 g <- ggraph(GAStech_graph, 
@@ -235,7 +235,7 @@ Things to learn from the code chunks above:
 
 -   *geom_node_point* is equivalent in functionality to *geo_point* of **ggplot2**. It allows for simple plotting of nodes in different shapes, colours and sizes. In the codes chnuks above colour and size are used.
 
-## 27.5.7 Modifying edges 
+## 27.5.7 Modifying edges
 
 ```{r}
 g <- ggraph(GAStech_graph, 
@@ -253,7 +253,7 @@ Things to learn from the code chunks above:
 
 -   *geom_edge_link* draws edges in the simplest way - as straight lines between the start and end nodes. But, it can do more that that. In the example above, argument *width* is used to map the width of the line in proportional to the Weight attribute and argument alpha is used to introduce opacity on the line.
 
-## 27.6 Creating facet graphs 
+## 27.6 Creating facet graphs
 
 There are three functions in ggraph to implement faceting, they are:
 
@@ -334,7 +334,7 @@ g + facet_nodes(~Department)+
   theme(legend.position = 'bottom')
 ```
 
-# 27.7 Network Metrics analysis 
+# 27.7 Network Metrics analysis
 
 ## 27.7.1 Computing centrality indices
 
@@ -360,7 +360,7 @@ Things to learn from the code chunk above:
 
 -   the algorithm used, on the other hand, is the *centrality_betweenness()* of **tidygraph**.
 
-## 27.7.2 Visualizing network metrics 
+## 27.7.2 Visualizing network metrics
 
 ```{r}
 g <- GAStech_graph %>%
@@ -373,7 +373,7 @@ g <- GAStech_graph %>%
 g + theme_graph()
 ```
 
-## 27.7.3 Visualizing community 
+## 27.7.3 Visualizing community
 
 tidygraph package inherits many of the community detection algorithms imbedded into igraph and makes them available to us, including *Edge-betweenness (group_edge_betweenness)*, *Leading eigenvector (group_leading_eigen)*, *Fast-greedy (group_fast_greedy)*, *Louvain (group_louvain)*, *Walktrap (group_walktrap)*, *Label propagation (group_label_prop)*, *InfoMAP (group_infomap)*, *Spinglass (group_spinglass)*, and *Optimal (group_optimal)*. Some community algorithms are designed to take into account direction or weight, while others ignore it. Use this [link](https://tidygraph.data-imaginist.com/reference/group_graph.html) to find out more about community detection functions provided by tidygraph,
 
@@ -393,9 +393,9 @@ g + theme_graph()
 
 -   *visNetwork()* function uses a nodes list and edges list to create an interactive graph.
 
-    -   The nodes list must include an \"id\" column, and the edge list must have \"from\" and \"to\" columns.
+    -   The nodes list must include an "id" column, and the edge list must have "from" and "to" columns.
 
-    -   The function also plots the labels for the nodes, using the names of the actors from the \"label\" column in the node list.
+    -   The function also plots the labels for the nodes, using the names of the actors from the "label" column in the node list.
 
 -   The resulting graph is fun to play around with.
 
