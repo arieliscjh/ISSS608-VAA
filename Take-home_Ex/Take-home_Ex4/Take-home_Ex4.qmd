@@ -1,5 +1,13 @@
 ---
 title: "Univariate & Bivariate Analysis"
+date: "March 8,2024"
+date-modified: "last-modified"
+execute: 
+  echo: true
+  warning: false
+  freeze: true
+editor: visual
+author: Chen Jinghan
 ---
 
 # Univariate & Bivariate Analysis
@@ -32,6 +40,8 @@ dataset <- read.csv("data/stu_SG_rcd.csv")
 
 ## 4.1 Student Profile: *Know more about our participants*
 
+### 4.1.1 Gender
+
 pie chart for gender, school type, home language
 
 ```{r}
@@ -56,7 +66,49 @@ ggplot(dataset_gender, aes(x="", y=prop, fill=Gender)) +
 
 ```
 
-bar chart for immigration, home language, siblings, parents education
+### 4.1.2 School Type
+
+```{r}
+dataset_SchoolType <- dataset %>%
+  count(SchoolType)
+
+dataset_SchoolType <- dataset_SchoolType %>% 
+  mutate(prop = n / sum(dataset_SchoolType$n) *100,
+         n_pct = paste0(round(prop,2),"%"),
+         ypos = cumsum(prop)- 0.5*prop,
+         ypos_pct = case_when(ypos > 100 ~ ypos-6, ypos<= 100 ~ ypos+6)) 
+
+ggplot(dataset_SchoolType, aes(x="", y=prop, fill=SchoolType)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  theme_void() + 
+  geom_text(aes(y = ypos, label = n), color = "white", size=3) +
+  geom_text(aes(y = ypos_pct, label = n_pct), color = "black", size=3)
+```
+
+### 4.1.3 Home Language 
+
+```{r}
+dataset_HomeLanguage <- dataset %>%
+  count(HomeLanguage)
+
+dataset_HomeLanguage <- dataset_HomeLanguage %>% 
+  mutate(prop = n / sum(dataset_HomeLanguage$n) *100,
+         n_pct = paste0(round(prop,2),"%"),
+         ypos = cumsum(prop)- 0.5*prop,
+         ypos_pct = case_when(ypos > 10 ~ ypos-5, ypos<= 10 ~ ypos+5)) 
+
+ggplot(dataset_HomeLanguage, aes(x="", y=prop, fill=HomeLanguage)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  theme_void() + 
+  geom_text(aes(y = ypos, label = n), color = "white", size=3) +
+  geom_text(aes(y = ypos_pct, label = n_pct), color = "black", size=3)
+```
+
+### 4.1.3 Immigration
+
+bar chart for immigration, siblings, parents education
 
 ```{r}
 ggplot(data = dataset,
@@ -81,7 +133,59 @@ geom_text(stat="count",
     ) 
 ```
 
+### 4.1.3 Siblings
+
+```{r}
+ggplot(data = dataset,
+       aes(x = Sibling)) +
+  geom_bar() +
+geom_text(stat="count", 
+      aes(label=paste0(stat(count), ", ", 
+      round(after_stat(count)/sum(after_stat(count))*100, 1), "%")),
+      vjust=-0.5,
+      size=3) +
+    labs(x = "",
+         y = "",
+         title = "Siblings") + 
+    theme(
+      plot.title = element_text(size=9, face="bold"),
+      panel.grid = element_blank(), 
+      axis.text.y = element_blank(),
+      axis.title.y = element_blank(),
+      axis.ticks.y = element_blank(),   
+      axis.ticks.x = element_blank(),      
+      plot.background=element_rect(fill="white",colour="white")
+    ) 
+```
+
+### 4.1.3 Parents Education
+
+```{r}
+ggplot(data = dataset,
+       aes(x = ParentsEducation)) +
+  geom_bar() +
+geom_text(stat="count", 
+      aes(label=paste0(stat(count), ", ", 
+      round(after_stat(count)/sum(after_stat(count))*100, 1), "%")),
+      vjust=-0.5,
+      size=3) +
+    labs(x = "",
+         y = "",
+         title = "ParentsEducation") + 
+    theme(
+      plot.title = element_text(size=9, face="bold"),
+      panel.grid = element_blank(), 
+      axis.text.y = element_blank(),
+      axis.title.y = element_blank(),
+      axis.ticks.y = element_blank(),   
+      axis.ticks.x = element_blank(),      
+      plot.background=element_rect(fill="white",colour="white")
+    ) 
+```
+
 ## 4.2 Academic performance
+
+### 4.2.1 Math
 
 ```{r}
 # min, max, mean, median of the score 
@@ -212,7 +316,266 @@ hbox_math & theme_void()
 
 ```
 
-# 5 Bivariate Analysis
+### 4.2.2 Reading
+
+```{r}
+# min, max, mean, median of the score 
+Reading_mean <- round(mean(dataset$Reading),0)
+Reading_median <- round(median(dataset$Reading),0)
+Reading_min <- round(min(dataset$Reading),0)
+Reading_max <- round(max(dataset$Reading),0)
+leftwhisk_Reading <- round(quantile(dataset$Reading, probs = .25)-1.5*IQR(dataset$Reading),0)
+
+Reading_distribution <- 
+  ggplot(
+    dataset, 
+    aes(x = Reading)
+  ) +
+  geom_histogram(
+    bins = 25,
+    color = "#f5f5f5",
+    fill="#c7c8cc"
+  ) +
+  scale_x_continuous(
+    breaks = scales::pretty_breaks(n = 5), 
+    limits = c(150,950),) +
+  geom_vline(
+    aes(xintercept = Reading_median),
+    colour="#595DE5", 
+    linewidth = 0.7, 
+    linetype = "dashed"
+  ) +
+  annotate(
+    geom = "text", 
+    x = 660, 
+    y = 870,
+    label = paste0("Median = ", Reading_median),
+    color="#595DE5"
+  ) +
+  geom_vline(
+    aes(xintercept = Reading_mean),
+    colour="#e0218a", 
+    linewidth = 0.7, 
+    linetype = "dashed"
+  ) +
+  annotate(
+    geom = "text", 
+    x = 535, 
+    y = 870,
+    label = paste0("Mean = ", Reading_mean),
+    color="#e0218a"
+  ) +  
+  labs(x = NULL, y = NULL
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.y = element_blank(),
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill="#f5f5f5",colour="#f5f5f5")
+  )
+
+# Boxplot
+box_Reading <- 
+  ggplot(
+    dataset, 
+    aes(y = Reading, x="")
+  ) + 
+  geom_boxplot(
+    fill="#c7c8cc",
+    outlier.colour="#d18a7d", 
+    outlier.shape=16,
+    outlier.size=1, 
+    notch=FALSE
+  ) + 
+  stat_summary(geom = 'point',
+               fun.y='mean',
+               colour = '#e0218a',
+               size=4) +
+  coord_flip() + 
+  
+    #Annotate with amounts to show range
+  annotate(
+    geom = "text", 
+    x = 0.5, 
+    y = Reading_min,
+    label = paste0(Reading_min),
+    color = "#d18a7d"
+  ) + 
+   annotate(
+    geom = "text", 
+    x = 0.5, 
+    y = leftwhisk_Reading,
+    label = paste0(leftwhisk_Reading),
+    color = "#34414E"
+  ) +
+  annotate(
+    geom = "text", 
+    x = 0.5, 
+    y = Reading_max,
+    label = paste0(Reading_max),
+    color = "#34414E"
+  ) + 
+  
+  labs(
+    title = "Distribution of Reading Scores Performance",
+     y = "", 
+    x = ""
+  ) + 
+   scale_y_continuous(
+    limits = c(150,950), 
+  ) +
+  
+  stat_boxplot(
+    geom="errorbar", 
+    width=0.5
+  ) + 
+  theme_minimal() +
+  theme(
+    axis.text = element_blank(), 
+    axis.ticks = element_blank(),
+    panel.grid.major = element_blank(),
+     plot.background = element_rect(
+       fill="#f5f5f5",colour="#f5f5f5")
+  )
+
+hbox_Reading <- (box_Reading / Reading_distribution) + 
+        plot_layout(heights = c(1, 2.5))
+
+hbox_Reading & theme_void()
+
+  
+```
+
+### 4.2.3 Science 
+
+```{r}
+# min, max, mean, median of the score 
+Science_mean <- round(mean(dataset$Science),0)
+Science_median <- round(median(dataset$Science),0)
+Science_min <- round(min(dataset$Science),0)
+Science_max <- round(max(dataset$Science),0)
+leftwhisk_Science <- round(quantile(dataset$Science, probs = .25)-1.5*IQR(dataset$Science),0)
+
+Science_distribution <- 
+  ggplot(
+    dataset, 
+    aes(x = Science)
+  ) +
+  geom_histogram(
+    bins = 25,
+    color = "#f5f5f5",
+    fill="#c7c8cc"
+  ) +
+  scale_x_continuous(
+    breaks = scales::pretty_breaks(n = 5), 
+    limits = c(150,950),) +
+  geom_vline(
+    aes(xintercept = Science_median),
+    colour="#595DE5", 
+    linewidth = 0.7, 
+    linetype = "dashed"
+  ) +
+  annotate(
+    geom = "text", 
+    x = 660, 
+    y = 870,
+    label = paste0("Median = ", Science_median),
+    color="#595DE5"
+  ) +
+  geom_vline(
+    aes(xintercept = Science_mean),
+    colour="#e0218a", 
+    linewidth = 0.7, 
+    linetype = "dashed"
+  ) +
+  annotate(
+    geom = "text", 
+    x = 535, 
+    y = 870,
+    label = paste0("Mean = ", Science_mean),
+    color="#e0218a"
+  ) +  
+  labs(x = NULL, y = NULL
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.y = element_blank(),
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill="#f5f5f5",colour="#f5f5f5")
+  )
+
+# Boxplot
+box_Science <- 
+  ggplot(
+    dataset, 
+    aes(y = Science, x="")
+  ) + 
+  geom_boxplot(
+    fill="#c7c8cc",
+    outlier.colour="#d18a7d", 
+    outlier.shape=16,
+    outlier.size=1, 
+    notch=FALSE
+  ) + 
+  stat_summary(geom = 'point',
+               fun.y='mean',
+               colour = '#e0218a',
+               size=4) +
+  coord_flip() + 
+  
+    #Annotate with amounts to show range
+  annotate(
+    geom = "text", 
+    x = 0.5, 
+    y = Science_min,
+    label = paste0(Science_min),
+    color = "#d18a7d"
+  ) + 
+   annotate(
+    geom = "text", 
+    x = 0.5, 
+    y = leftwhisk_Science,
+    label = paste0(leftwhisk_Science),
+    color = "#34414E"
+  ) +
+  annotate(
+    geom = "text", 
+    x = 0.5, 
+    y = Science_max,
+    label = paste0(Science_max),
+    color = "#34414E"
+  ) + 
+  
+  labs(
+    title = "Distribution of Science Scores Performance",
+     y = "", 
+    x = ""
+  ) + 
+   scale_y_continuous(
+    limits = c(150,950), 
+  ) +
+  
+  stat_boxplot(
+    geom="errorbar", 
+    width=0.5
+  ) + 
+  theme_minimal() +
+  theme(
+    axis.text = element_blank(), 
+    axis.ticks = element_blank(),
+    panel.grid.major = element_blank(),
+     plot.background = element_rect(
+       fill="#f5f5f5",colour="#f5f5f5")
+  )
+
+hbox_Science <- (box_Science / Science_distribution) + 
+        plot_layout(heights = c(1, 2.5))
+
+hbox_Science & theme_void()
+
+```
+
+# 5. Bivariate Analysis
 
 ## 5.1 Time spend on homework & Academic performance
 
@@ -266,7 +629,7 @@ ggbetweenstats(
 )
 ```
 
-## 5.2 Exercise time & Academic performance
+## 5.2 Subject Preference & Academic Performance
 
 ### 5.2.1 Distribution
 
@@ -330,7 +693,7 @@ ggbetweenstats(
 )
 ```
 
-## 5.3 Academic performance across number of books and gender 
+## 5.3 Academic performance across number of books and gender
 
 ```{r}
 # Calculate mean joviality per tile
@@ -398,4 +761,32 @@ ggiraph::girafe(ggobj = gg_tile,
                 options = list(opts_tooltip(css = tooltip_css)))                   
 ```
 
-## 5.4 Time of Exercise and Academic performance 
+## 5.3 Academic performance across number of books and gender
+
+## 5.4 Time of Exercise and Academic performance
+
+```{r}
+#| eval: false 
+chr_exercise <- as.character(dataset$Exercise)
+ggplot(
+    dataset, 
+    aes(x = Math, 
+        y = chr_exercise ,
+        fill = chr_exercise,
+        color = chr_exercise)
+  ) +
+  geom_density_ridges(
+    # Adjust bandwidth to reveal variations 
+    bandwidth = 15,
+    alpha = .6
+  ) +
+  labs(
+    title = "Distribution of Math Score Across Time Length Spend on Math Homework"
+  ) +
+  theme(
+    legend.position = "none",
+    axis.title.y = element_blank(),
+    panel.grid.major = element_blank(),
+    plot.background = element_rect(fill="white",colour="white")
+  )
+```
