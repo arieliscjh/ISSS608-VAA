@@ -23,7 +23,7 @@ In this analysis, it will be break into two parts:
 # 2. Loading R package
 
 ```{r}
-pacman::p_load(tidyverse, haven, patchwork,ggrepel,ggthemes, ggstatsplot, ggplot2, ggridges, performance, ggiraph)
+pacman::p_load(tidyverse, haven, patchwork,ggrepel,ggthemes, ggstatsplot, ggplot2, ggridges, performance, ggiraph, treemap, treemapify)
 ```
 
 # 3. Import data
@@ -42,7 +42,10 @@ dataset <- read.csv("data/stu_SG_rcd.csv")
 
 ### 4.1.1 Gender
 
-pie chart for gender, school type, home language
+Using pie chart to demonstrate the gender distribution
+
+::: panel-tabset
+## Gender 
 
 ```{r}
 dataset_gender <- dataset %>%
@@ -53,9 +56,8 @@ dataset_gender <- dataset_gender %>%
          n_pct = paste0(round(prop,2),"%"),
          ypos = cumsum(prop)- 0.5*prop,
          ypos_pct = case_when(ypos > 50 ~ ypos-4, ypos<= 50 ~ ypos+4)) 
-```
 
-```{r}
+
 ggplot(dataset_gender, aes(x="", y=prop, fill=Gender)) +
   geom_bar(stat="identity", width=1) +
   coord_polar("y", start=0) +
@@ -63,10 +65,9 @@ ggplot(dataset_gender, aes(x="", y=prop, fill=Gender)) +
   geom_text(aes(y = ypos, label = n), color = "white", size=3) +
   geom_text(aes(y = ypos_pct, label = n_pct), color = "black", size=3)
 
-
 ```
 
-### 4.1.2 School Type
+## School Type
 
 ```{r}
 dataset_SchoolType <- dataset %>%
@@ -86,29 +87,7 @@ ggplot(dataset_SchoolType, aes(x="", y=prop, fill=SchoolType)) +
   geom_text(aes(y = ypos_pct, label = n_pct), color = "black", size=3)
 ```
 
-### 4.1.3 Home Language 
-
-```{r}
-dataset_HomeLanguage <- dataset %>%
-  count(HomeLanguage)
-
-dataset_HomeLanguage <- dataset_HomeLanguage %>% 
-  mutate(prop = n / sum(dataset_HomeLanguage$n) *100,
-         n_pct = paste0(round(prop,2),"%"),
-         ypos = cumsum(prop)- 0.5*prop,
-         ypos_pct = case_when(ypos > 10 ~ ypos-5, ypos<= 10 ~ ypos+5)) 
-
-ggplot(dataset_HomeLanguage, aes(x="", y=prop, fill=HomeLanguage)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) +
-  theme_void() + 
-  geom_text(aes(y = ypos, label = n), color = "white", size=3) +
-  geom_text(aes(y = ypos_pct, label = n_pct), color = "black", size=3)
-```
-
-### 4.1.3 Immigration
-
-bar chart for immigration, siblings, parents education
+## Immigration
 
 ```{r}
 ggplot(data = dataset,
@@ -133,7 +112,27 @@ geom_text(stat="count",
     ) 
 ```
 
-### 4.1.3 Siblings
+## Home language 
+
+```{r}
+dataset_HomeLanguage <- dataset %>%
+  count(HomeLanguage)
+
+dataset_HomeLanguage <- dataset_HomeLanguage %>% 
+  mutate(prop = n / sum(dataset_HomeLanguage$n) *100,
+         n_pct = paste0(round(prop,2),"%"),
+         ypos = cumsum(prop)- 0.5*prop,
+         ypos_pct = case_when(ypos > 10 ~ ypos-5, ypos<= 10 ~ ypos+5)) 
+
+ggplot(dataset_HomeLanguage, aes(x="", y=prop, fill=HomeLanguage)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  theme_void() + 
+  geom_text(aes(y = ypos, label = n), color = "white", size=3) +
+  geom_text(aes(y = ypos_pct, label = n_pct), color = "black", size=3)
+```
+
+## Siblings
 
 ```{r}
 ggplot(data = dataset,
@@ -158,34 +157,37 @@ geom_text(stat="count",
     ) 
 ```
 
-### 4.1.3 Parents Education
+## Parents Education
 
 ```{r}
-ggplot(data = dataset,
-       aes(x = ParentsEducation)) +
-  geom_bar() +
-geom_text(stat="count", 
-      aes(label=paste0(stat(count), ", ", 
-      round(after_stat(count)/sum(after_stat(count))*100, 1), "%")),
-      vjust=-0.5,
-      size=3) +
-    labs(x = "",
-         y = "",
-         title = "ParentsEducation") + 
-    theme(
-      plot.title = element_text(size=9, face="bold"),
-      panel.grid = element_blank(), 
-      axis.text.y = element_blank(),
-      axis.title.y = element_blank(),
-      axis.ticks.y = element_blank(),   
-      axis.ticks.x = element_blank(),      
-      plot.background=element_rect(fill="white",colour="white")
-    ) 
+
+dataset %>%
+  count(ParentsEducation) %>%
+  mutate( pct = paste0(round(n/nrow(dataset)*100,2),"%"),
+          label = paste(ParentsEducation, n, pct, sep = "\n")) %>%
+
+treemap(index = "label",  # Categorical variable
+        vSize = "n",   # Dependent variable
+        title = "Distribution of Parents' Education",
+        fontsize.title = 14,
+        fontfamily.title = "Arial",
+        )
+# treemap(dataset,
+#         index = "ParentsEducation",  # Categorical variable
+#         vSize = "ParentsEducation",   # Dependent variable
+#         title = "Distribution of Parents' Education",
+#         fontsize.title = 14,
+#         fontfamily.title = "Arial",
+#         )
 ```
+:::
+
+### 
 
 ## 4.2 Academic performance
 
-### 4.2.1 Math
+::: panel-tabset
+## Math
 
 ```{r}
 # min, max, mean, median of the score 
@@ -316,7 +318,7 @@ hbox_math & theme_void()
 
 ```
 
-### 4.2.2 Reading
+## Reading
 
 ```{r}
 # min, max, mean, median of the score 
@@ -446,7 +448,7 @@ hbox_Reading & theme_void()
   
 ```
 
-### 4.2.3 Science 
+## Science
 
 ```{r}
 # min, max, mean, median of the score 
@@ -574,6 +576,7 @@ hbox_Science <- (box_Science / Science_distribution) +
 hbox_Science & theme_void()
 
 ```
+:::
 
 # 5. Bivariate Analysis
 
@@ -631,45 +634,7 @@ ggbetweenstats(
 
 ## 5.2 Subject Preference & Academic Performance
 
-### 5.2.1 Distribution
-
-```{r}
-ggplot(dataset, 
-    aes(x = Math, 
-        y = Preference_Math)
-  ) +
-  geom_point(
-    alpha = 0.2, 
-    size = 7
-  ) +
-  stat_summary(
-    color = "#fdbf11", 
-    fun = "median", 
-    geom = "point", 
-    size = 7, 
-    alpha = 0.8
-  ) +
-  scale_x_continuous(
-    expand = expansion(mult = c(0.02, 0)), 
-    limits = c(150, 950),
-    breaks = scales::pretty_breaks(n=3)
-  ) +
-  scale_y_discrete(
-    limits = c(NA,"Strongly Agree","Agree","Disagree","Strongly Disagree")
-  ) +
-  labs(
-    title = "Stronger perference in math tend to have a higher math score ",
-    subtitle = "Median values are highlighted in Yellow",
-    x = "Math Score",
-    y = NULL
-  ) +
-  theme(
-    axis.ticks.y = element_blank(),
-    plot.background = element_rect(fill="white",colour="white")
-  )
-```
-
-### 5.2.2 Normality Test
+### 5.2.1 Normality Test
 
 ```{r}
 model1 <- lm(Math ~ Preference_Math, data = dataset)
@@ -677,7 +642,7 @@ check_n <- check_normality(model1)
 plot(check_n)
 ```
 
-### 5.2.3 ANOVA
+### 5.2.2 ANOVA
 
 ```{r}
 ggbetweenstats(
@@ -759,34 +724,4 @@ ggiraph::girafe(ggobj = gg_tile,
                 width_svg = 6,
                 height_svg = 6*0.7,
                 options = list(opts_tooltip(css = tooltip_css)))                   
-```
-
-## 5.3 Academic performance across number of books and gender
-
-## 5.4 Time of Exercise and Academic performance
-
-```{r}
-#| eval: false 
-chr_exercise <- as.character(dataset$Exercise)
-ggplot(
-    dataset, 
-    aes(x = Math, 
-        y = chr_exercise ,
-        fill = chr_exercise,
-        color = chr_exercise)
-  ) +
-  geom_density_ridges(
-    # Adjust bandwidth to reveal variations 
-    bandwidth = 15,
-    alpha = .6
-  ) +
-  labs(
-    title = "Distribution of Math Score Across Time Length Spend on Math Homework"
-  ) +
-  theme(
-    legend.position = "none",
-    axis.title.y = element_blank(),
-    panel.grid.major = element_blank(),
-    plot.background = element_rect(fill="white",colour="white")
-  )
 ```
