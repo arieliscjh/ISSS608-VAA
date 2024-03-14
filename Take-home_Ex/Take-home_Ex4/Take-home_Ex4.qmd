@@ -721,14 +721,14 @@ ggiraph::girafe(ggobj = gg_tile,
 
 # Storyboard
 
-## 1. Landing Page 
+## 1. Landing Page
 
 In this page, it demonstrate a overview of our project, user can see basic information that involved in the project, such as number of students and schools. Besides, a description of background and data source also demonstrated in the page to make user have a holistic view of the background of the project
 
-![](images/Landing page.png)
+![](images/Landing%20page.png)
 
 ## 2. First Page
 
 In the first page, it shows the Univariate & Bivariate Analysis of different influential factors and students' academic performance. User can select different variable factor and subjects' academic performance to access the significance of each factors that potentially affect subjects' score through statistically test
 
-![](images/first page.png)
+![](images/first%20page.png)
